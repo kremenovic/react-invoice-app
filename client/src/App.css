@@ -1,0 +1,156 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#root,
+body {
+  background-color: #f8f8fb;
+}
+
+html,
+body,
+#root,
+#root > div {
+  max-height: 100%;
+}
+
+h1 {
+  color: #0C0E16;
+}
+
+.p-color {
+  color: #888EB0;
+}
+
+.sidebar {
+  width: 105px;
+  background-color: #373B53;
+  border-top-right-radius: 20px;
+}
+
+.section {
+  width: calc(100% - 105px);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.logo {
+  background: #7C5DFA;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.mode-switch {
+  text-align: center;
+}
+
+.mode-switch button svg {
+  color: #7E88C3;
+  font-size: 20px;
+}
+
+.mode-switch button svg path {
+  fill: #7E88C3;
+}
+
+.add-invoice {
+  background-color: #7C5DFA;
+  color: #fff;
+}
+
+.delete-invoice {
+  background-color: #EC5757;
+  color: #fff;
+}
+
+.edit-invoice {
+  background-color: #979797;
+  color: #fff;
+}
+
+.filters {
+  cursor: pointer;
+
+}
+
+.filters p svg {
+  margin-left: 10px;
+}
+
+.filters:hover > .filter-options {
+  display: flex;
+
+}
+
+.filters:hover p svg {
+  transform: rotate(180deg);
+  transition: all .3s ease-in-out;
+}
+
+.filter-options {
+    width: 170px;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 999;
+    display: none;
+}
+
+.invoice-status button {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.invoice-status button.paid {
+    background: #33d69f47;
+    color: #33D69F;
+}
+
+.invoice-status button.pending {
+    background: #ff8f0036;
+    color: #FF8F00;
+}
+
+.invoice-status button.draft {
+    background: #373b533b;
+    color: #373B53;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .sidebar {
+      position: relative;
+      width: 100%;
+      border-radius: 0px;
+      flex-direction: row;
+      padding-bottom: 0px;
+    }
+
+    .logo {
+      border-radius: 0px;
+    }
+
+    .sidebar-bottom {
+      display: flex;
+      align-items: center;
+    }
+
+    .mode-switch {
+      margin-right: 30px;
+      border-right: 1px solid #979797;
+      padding-right: 30px;
+    }
+
+    .mode-switch button svg {
+      font-size: 30px;
+    }
+
+    .user {
+      padding-right: 20px;
+    }
+
+    .section {
+      width: calc(100% - 30px);
+    }
+}
