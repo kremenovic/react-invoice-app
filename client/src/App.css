@@ -22,6 +22,10 @@ h1 {
   color: #888EB0;
 }
 
+.dark-bg {
+  background-color: #373B53;
+}
+
 .sidebar {
   width: 105px;
   background-color: #373B53;
@@ -119,6 +123,11 @@ h1 {
 
 @media only screen and (max-width: 768px) {
 
+    .section {
+      padding-top: 25px;
+      padding-bottom: 25px;
+    }
+
     .sidebar {
       position: relative;
       width: 100%;
@@ -153,4 +162,16 @@ h1 {
     .section {
       width: calc(100% - 30px);
     }
+}
+
+@media only screen and (max-width: 390px) {
+  .invoice-top-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .invoice-top-buttons button {
+    justify-content: center;
+  }
 }
