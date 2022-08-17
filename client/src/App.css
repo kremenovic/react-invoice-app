@@ -14,8 +14,18 @@ body,
   max-height: 100%;
 }
 
+body {
+  position: relative;
+}
+
 h1 {
   color: #0C0E16;
+}
+
+.center-icon {
+      top: 55%;
+    left: 90%;
+    transform: translate(-50%, -50%);
 }
 
 .p-color {
@@ -30,6 +40,7 @@ h1 {
   width: 105px;
   background-color: #373B53;
   border-top-right-radius: 20px;
+  z-index: 50;
 }
 
 .section {
@@ -38,6 +49,7 @@ h1 {
   padding-bottom: 50px;
   max-width: 750px;
   margin: 0 auto;
+  position: relative;
 }
 
 .logo {
@@ -72,6 +84,11 @@ h1 {
 .edit-invoice {
   background-color: #979797;
   color: #fff;
+}
+
+.add-item {
+  background-color: #F9FAFE;
+  color: #7E88C3;
 }
 
 .filters {
@@ -120,6 +137,13 @@ h1 {
     background: #373b533b;
     color: #373B53;
 }
+
+.form {
+  left: 105px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
 
 @media only screen and (max-width: 768px) {
 
