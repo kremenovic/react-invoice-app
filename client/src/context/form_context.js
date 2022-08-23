@@ -1,9 +1,16 @@
-import React, { useContext, useReducer, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import form_reducer from "../reducers/form_reducer";
 
 const FormContext = React.createContext();
 
 const initialState = {
+  id: "",
   billToFields: [
     {
       billToStreetAddress: "",
@@ -33,6 +40,7 @@ const initialState = {
 const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(form_reducer, initialState);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const selectRef = useRef("");
 
   const addFields = (e) => {
@@ -86,14 +94,41 @@ const FormProvider = ({ children }) => {
     dispatch({ type: "CHANGE_PAYMENT_TERMS", payload: paymentTerm });
   };
 
+  const handleDiscard = (e) => {
+    e.preventDefault();
+    setShowForm(false);
+    dispatch({ type: "DISCARD_BTN" });
+  };
+
   const handleSaveDraft = (e) => {
     e.preventDefault();
-    dispatch({ type: "SAVE_DRAFT_BTN" });
+    setShowForm(false);
+    const id = randomID();
+    dispatch({ type: "SAVE_DRAFT_BTN", payload: id });
   };
 
   const handleSaveSend = (e) => {
     e.preventDefault();
-    dispatch({ type: "SAVE_SEND_BTN" });
+    setShowForm(false);
+    const id = randomID();
+    dispatch({ type: "SAVE_SEND_BTN", payload: id });
+  };
+
+  const newInvoice = () => {
+    setShowForm(true);
+    dispatch({ type: "NEW_INVOICE" });
+  };
+
+  // generate random invoice ID
+  const randomID = () => {
+    let randomLetters = Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, "")
+      .substr(0, 2)
+      .toUpperCase();
+    let randomNumbers = Math.floor(1000 + Math.random() * 9000);
+    let generatedID = randomLetters + randomNumbers;
+    return generatedID;
   };
 
   return (
@@ -114,6 +149,10 @@ const FormProvider = ({ children }) => {
         handlePaymentTermsChange,
         handleProjectDescription,
         handleSaveDraft,
+        setShowForm,
+        showForm,
+        newInvoice,
+        handleDiscard,
       }}
     >
       {children}

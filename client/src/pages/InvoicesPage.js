@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 import { useInvoiceContext } from "../context/invoices_context";
+import { useFormContext } from "../context/form_context";
 
 import Filters from "../components/Filters/Filters";
 import Invoices from "../components/Invoices/Invoices";
@@ -12,6 +13,7 @@ import { FaPlusCircle } from "react-icons/fa";
 
 const InvoicesPage = () => {
   const { invoices } = useInvoiceContext();
+  const { setShowForm, newInvoice } = useFormContext();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <div className="container section">
@@ -26,7 +28,10 @@ const InvoicesPage = () => {
         </div>
         <div className="content-top-right flex justify-between items-center relative">
           <Filters />
-          <button className="ml-5 add-invoice pr-5 pl-3 py-2 rounded-3xl font-bold flex items-center">
+          <button
+            className="ml-5 add-invoice pr-5 pl-3 py-2 rounded-3xl font-bold flex items-center"
+            onClick={() => newInvoice()}
+          >
             <FaPlusCircle className="mr-3 text-3xl md: text-xl" />{" "}
             {!isMobile ? "New Invoices" : "New"}
           </button>

@@ -28,6 +28,8 @@ const InvoiceForm = () => {
     projectDescription,
     handleProjectDescription,
     handleSaveDraft,
+    showForm,
+    handleDiscard,
   } = useFormContext();
 
   useEffect(() => {
@@ -37,8 +39,16 @@ const InvoiceForm = () => {
 
   return (
     <>
-      <div className="overlay max-w-full opacity-70 fixed top-0 bottom-0 left-0 right-0 z-40 h-screen w-full bg-black"></div>
-      <div className="container pt-10 form max-w-3xl z-50 absolute bg-white h-screen overflow-auto lg:fixed">
+      <div
+        className={`overlay max-w-full opacity-70 fixed top-0 bottom-0 left-0 right-0 z-40 h-screen w-full bg-black ${
+          showForm ? "show" : ""
+        }`}
+      ></div>
+      <div
+        className={`container pt-10 form max-w-3xl z-50 absolute bg-white h-screen overflow-auto lg:fixed ${
+          showForm ? "show" : ""
+        }`}
+      >
         <div className="inner-section bg-white ">
           <h3 className="font-bold text-2xl px-10">New Invoice</h3>
           <form className="mt-5 w-full px-10">
@@ -54,7 +64,7 @@ const InvoiceForm = () => {
                 id="billToStreetAddress"
                 name="billToStreetAddress"
                 className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                value={billToFields.billToStreetAddress}
+                value={billToFields[0].billToStreetAddress}
                 onChange={(e) => handleToTextChange(e)}
               />
             </div>
@@ -69,7 +79,7 @@ const InvoiceForm = () => {
                   id="billToCity"
                   name="billToCity"
                   className="border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg"
-                  value={billToFields.billToCity}
+                  value={billToFields[0].billToCity}
                   onChange={(e) => handleToTextChange(e)}
                 />
               </div>
@@ -82,7 +92,7 @@ const InvoiceForm = () => {
                   id="billToPostCode"
                   name="billToPostCode"
                   className="border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg"
-                  value={billToFields.billToPostCode}
+                  value={billToFields[0].billToPostCode}
                   onChange={(e) => handleToTextChange(e)}
                 />
               </div>
@@ -95,7 +105,7 @@ const InvoiceForm = () => {
                   id="billToCountry"
                   name="billToCountry"
                   className="border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg"
-                  value={billToFields.billToCountry}
+                  value={billToFields[0].billToCountry}
                   onChange={(e) => handleToTextChange(e)}
                 />
               </div>
@@ -112,7 +122,7 @@ const InvoiceForm = () => {
                 id="billFromClientName"
                 name="billFromClientName"
                 className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                value={billFromFields.billFromClientName}
+                value={billFromFields[0].billFromClientName}
                 onChange={(e) => handleFromTextChange(e)}
               />
             </div>
@@ -126,7 +136,7 @@ const InvoiceForm = () => {
                 id="billFromClientEmail"
                 name="billFromClientEmail"
                 className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                value={billFromFields.billFromClientEmail}
+                value={billFromFields[0].billFromClientEmail}
                 onChange={(e) => handleFromTextChange(e)}
               />
             </div>
@@ -140,7 +150,7 @@ const InvoiceForm = () => {
                 id="billFromStreetAddress"
                 name="billFromStreetAddress"
                 className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                value={billFromFields.billFromStreetAddress}
+                value={billFromFields[0].billFromStreetAddress}
                 onChange={(e) => handleFromTextChange(e)}
               />
             </div>
@@ -155,7 +165,7 @@ const InvoiceForm = () => {
                   id="billFromCity"
                   name="billFromCity"
                   className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                  value={billFromFields.billFromCity}
+                  value={billFromFields[0].billFromCity}
                   onChange={(e) => handleFromTextChange(e)}
                 />
               </div>
@@ -168,7 +178,7 @@ const InvoiceForm = () => {
                   id="billbillFromCode"
                   name="billbillFromCode"
                   className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                  value={billFromFields.billbillFromCode}
+                  value={billFromFields[0].billbillFromCode}
                   onChange={(e) => handleFromTextChange(e)}
                 />
               </div>
@@ -181,7 +191,7 @@ const InvoiceForm = () => {
                   id="billFromCountry"
                   name="billFromCountry"
                   className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                  value={billFromFields.billFromCountry}
+                  value={billFromFields[0].billFromCountry}
                   onChange={(e) => handleFromTextChange(e)}
                 />
               </div>
@@ -328,7 +338,10 @@ const InvoiceForm = () => {
             </button>
             <div className="invoice-top-info bg-white rounded-xl my-8 flex flex-col justify-between lg:flex lg:flex-row">
               <div className="invoice-status flex items-center justify-between lg:justify-start">
-                <button className="edit-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer">
+                <button
+                  className="edit-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
+                  onClick={(e) => handleDiscard(e)}
+                >
                   Discard
                 </button>
               </div>

@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 const form_reducer = (state, action) => {
   switch (action.type) {
     case "ADD_ITEM_FIELD":
@@ -51,13 +53,75 @@ const form_reducer = (state, action) => {
     case "CHANGE_PAYMENT_TERMS":
       return { ...state, paymentTerms: action.payload };
 
+    case "DISCARD_BTN":
+      return {
+        ...state,
+        billToFields: [
+          {
+            billToStreetAddress: "",
+            billToCity: "",
+            billToPostCode: "",
+            billToCountry: "",
+          },
+        ],
+        billFromFields: [
+          {
+            billFromClientName: "",
+            billFromClientEmail: "",
+            billFromStreetAddress: "",
+            billFromCity: "",
+            billbillFromCode: "",
+            billFromCountry: "",
+          },
+        ],
+        projectDescription: "",
+        itemListFields: [],
+        issueDate: new Date(),
+        paymentDue: "",
+        paymentTerms: "",
+        status: "",
+      };
+
     case "SAVE_DRAFT_BTN":
       state.status = "draft";
-      return { ...state };
+      state.id = action.payload;
+      Axios.post(`http://localhost:8080/api/invoice`, state);
+      return state;
 
     case "SAVE_SEND_BTN":
       state.status = "pending";
+      state.id = action.payload;
+      Axios.post(`http://localhost:8080/api/invoice`, state);
       return { ...state };
+
+    case "NEW_INVOICE":
+      return {
+        ...state,
+        billToFields: [
+          {
+            billToStreetAddress: "",
+            billToCity: "",
+            billToPostCode: "",
+            billToCountry: "",
+          },
+        ],
+        billFromFields: [
+          {
+            billFromClientName: "",
+            billFromClientEmail: "",
+            billFromStreetAddress: "",
+            billFromCity: "",
+            billbillFromCode: "",
+            billFromCountry: "",
+          },
+        ],
+        projectDescription: "",
+        itemListFields: [],
+        issueDate: new Date(),
+        paymentDue: "",
+        paymentTerms: "",
+        status: "",
+      };
     default:
       throw new Error("no matching action type");
   }

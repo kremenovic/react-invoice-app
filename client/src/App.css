@@ -139,9 +139,25 @@ h1 {
 }
 
 .form {
-  left: 105px;
+  left: -100%;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  transition: 1s;
+}
+
+.overlay {
+  left: -100%;
+  transition: 1s;
+}
+
+.show.form,
+.show.overlay {
+  left: 105px;
+  transition: 1s;
+}
+
+.form-shadow {
+  box-shadow: 1px 0px 14px 2px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 
 
