@@ -1,30 +1,27 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // set configurations
-  const configuration = {
-    method: "post",
-    url: "http://localhost:8080/api/login",
-    data: {
-      email,
-      password,
-    },
-  };
+  const URL = `http://localhost:8080/api/`;
 
   const handleSubmit = (e) => {
-    // prevent the form from refreshing the whole page
     e.preventDefault();
-    // make a popup alert showing the "submitted" text
-    axios(configuration)
-      .then((result) => {
-        console.log(result);
+    axios
+      .post(`${URL}login`, { email, password })
+      .then((res) => {
+        alert("Succesfully logged in!");
+        cookies.set("TOKEN", res.data.token, {
+          path: "/",
+        });
+        window.location.href = "/invoices";
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err.response.data.message);
       });
   };
 

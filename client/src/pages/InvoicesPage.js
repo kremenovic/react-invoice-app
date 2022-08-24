@@ -4,6 +4,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { useInvoiceContext } from "../context/invoices_context";
 import { useFormContext } from "../context/form_context";
+import { useUserContext } from "../context/user_context";
 
 import Filters from "../components/Filters/Filters";
 import Invoices from "../components/Invoices/Invoices";
@@ -14,6 +15,7 @@ import { FaPlusCircle } from "react-icons/fa";
 const InvoicesPage = () => {
   const { invoices } = useInvoiceContext();
   const { setShowForm, newInvoice } = useFormContext();
+
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
     <div className="container section">

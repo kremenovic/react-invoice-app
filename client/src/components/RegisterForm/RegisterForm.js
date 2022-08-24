@@ -6,25 +6,21 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const configuration = {
-    method: "post",
-    url: "http://localhost:8080/api/register",
-    data: {
-      name,
-      email,
-      password,
-    },
-  };
+  const URL = `http://localhost:8080/api/`;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios(configuration)
+    axios
+      .post(`${URL}register`, { name, email, password })
       .then(() => {
-        alert("Succesfully register!");
+        axios.post(`${URL}login`, { email, password }).then(() => {
+          alert("Succesfully registered");
+          window.location.href = "/invoices";
+        });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err.response.data.message);
       });
   };
 
