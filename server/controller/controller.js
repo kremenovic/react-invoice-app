@@ -20,9 +20,7 @@ async function create_User(req, res) {
 
     create.save(function (err) {
       if (!err) return res.json(create);
-      return res
-        .status(400)
-        .json({ message: `Error while creating user ${err}` });
+      return res.status(400).json({ message: `${err}` });
     });
   });
 }
@@ -42,7 +40,7 @@ async function login_User(req, res) {
         .then((passwordCheck) => {
           if (!passwordCheck) {
             return res.status(400).send({
-              message: "password does not match",
+              message: "Password does not match",
               error,
             });
           }
@@ -66,7 +64,7 @@ async function login_User(req, res) {
         })
         .catch((error) => {
           res.status(400).send({
-            message: "Passwords does not match",
+            message: "Password does not match",
             error,
           });
         });
