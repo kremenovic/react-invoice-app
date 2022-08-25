@@ -6,11 +6,16 @@ import React, {
   useState,
 } from "react";
 import form_reducer from "../reducers/form_reducer";
+import { useUserContext } from "./user_context";
+
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const FormContext = React.createContext();
 
 const initialState = {
   id: "",
+  user: "",
   billToFields: [
     {
       billToStreetAddress: "",
@@ -42,6 +47,7 @@ const FormProvider = ({ children }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const selectRef = useRef("");
+  const { name } = useUserContext();
 
   const addFields = (e) => {
     e.preventDefault();
@@ -104,20 +110,22 @@ const FormProvider = ({ children }) => {
     e.preventDefault();
     setShowForm(false);
     const id = randomID();
-    dispatch({ type: "SAVE_DRAFT_BTN", payload: id });
+    dispatch({ type: "SAVE_DRAFT_BTN", payload: { id, token, name } });
   };
 
   const handleSaveSend = (e) => {
     e.preventDefault();
     setShowForm(false);
     const id = randomID();
-    dispatch({ type: "SAVE_SEND_BTN", payload: id });
+    dispatch({ type: "SAVE_SEND_BTN", payload: { id, token, name } });
   };
 
   const newInvoice = () => {
     setShowForm(true);
     dispatch({ type: "NEW_INVOICE" });
   };
+
+  const token = cookies.get("TOKEN");
 
   // generate random invoice ID
   const randomID = () => {

@@ -1,28 +1,16 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useUserContext } from "../../context/user_context";
 
 const RegisterForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const URL = `http://localhost:8080/api/`;
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    axios
-      .post(`${URL}register`, { name, email, password })
-      .then(() => {
-        axios.post(`${URL}login`, { email, password }).then(() => {
-          alert("Succesfully registered");
-          window.location.href = "/invoices";
-        });
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-      });
-  };
+  const {
+    registerName,
+    registerEmail,
+    registerPassword,
+    setRegisterName,
+    setRegisterEmail,
+    setRegisterPassword,
+    handleRegistration,
+  } = useUserContext();
 
   return (
     <>
@@ -35,8 +23,8 @@ const RegisterForm = () => {
             type="text"
             id="registerName"
             name="registerName"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={registerName}
+            onChange={(e) => setRegisterName(e.target.value)}
             className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
           />
         </div>
@@ -48,8 +36,8 @@ const RegisterForm = () => {
             type="email"
             id="registerEmail"
             name="registerEmail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={registerEmail}
+            onChange={(e) => setRegisterEmail(e.target.value)}
             className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
           />
         </div>
@@ -61,15 +49,15 @@ const RegisterForm = () => {
             type="password"
             id="registerPassword"
             name="registerPassword"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={registerPassword}
+            onChange={(e) => setRegisterPassword(e.target.value)}
             className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
           />
         </div>
         <button
           className="mt-5 add-invoice px-4 py-2 rounded-3xl font-bold flex justify-center items-center cursor-pointer w-full"
           type="submit"
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => handleRegistration(e)}
         >
           Register
         </button>

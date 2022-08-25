@@ -108,9 +108,12 @@ const SingleInvoice = () => {
             </div>
           </div>
           <div className="invoice-items-body ">
-            {items.map((item, key) => {
+            {items.map((item, index) => {
               return (
-                <div className="item flex justify-between my-5 last:my-0">
+                <div
+                  key={index}
+                  className="item flex justify-between my-5 last:my-0"
+                >
                   <h1 className="flex-initial w-64 font-bold">{item.name}</h1>
                   <h1 className="flex-initial w-32 text-center font-bold p-color">
                     {item.quantity}

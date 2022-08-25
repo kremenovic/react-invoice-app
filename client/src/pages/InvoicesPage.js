@@ -21,7 +21,7 @@ const InvoicesPage = () => {
     <div className="container section">
       <div className="content-top flex justify-between items-center">
         <div className="content-top-left">
-          <h1 className="text-3xl font-bold md: text-xl">Invoices</h1>
+          <h1 className="text-3xl font-bold md:text-xl">Invoices</h1>
           <p className="p-color text-xs ">
             {!isMobile
               ? `There are ${invoices ? invoices.length : "0"} total invoices`
@@ -34,7 +34,7 @@ const InvoicesPage = () => {
             className="ml-5 add-invoice pr-5 pl-3 py-2 rounded-3xl font-bold flex items-center"
             onClick={() => newInvoice()}
           >
-            <FaPlusCircle className="mr-3 text-3xl md: text-xl" />{" "}
+            <FaPlusCircle className="mr-3 text-3xl md:text-xl" />{" "}
             {!isMobile ? "New Invoices" : "New"}
           </button>
         </div>

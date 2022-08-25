@@ -84,14 +84,25 @@ const form_reducer = (state, action) => {
 
     case "SAVE_DRAFT_BTN":
       state.status = "draft";
-      state.id = action.payload;
-      Axios.post(`http://localhost:8080/api/invoice`, state);
+      state.id = action.payload.id;
+      state.user = action.payload.name;
+
+      Axios.post(`http://localhost:8080/api/invoice`, state, {
+        headers: {
+          Authorization: `Bearer ${action.payload.token}`,
+        },
+      });
       return state;
 
     case "SAVE_SEND_BTN":
       state.status = "pending";
-      state.id = action.payload;
-      Axios.post(`http://localhost:8080/api/invoice`, state);
+      state.id = action.payload.id;
+      state.user = action.payload.name;
+      Axios.post(`http://localhost:8080/api/invoice`, state, {
+        headers: {
+          Authorization: `Bearer ${action.payload.token}`,
+        },
+      });
       return { ...state };
 
     case "NEW_INVOICE":

@@ -66,6 +66,7 @@ const InvoiceForm = () => {
                 className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
                 value={billToFields[0].billToStreetAddress}
                 onChange={(e) => handleToTextChange(e)}
+                required
               />
             </div>
             {/* 3 col */}
