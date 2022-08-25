@@ -9,12 +9,12 @@ const { response } = require("express");
 // post /api/register
 async function create_User(req, res) {
   if (!req.body) return res.status(400).json("Post HTTP Data not Provided");
-  let { name, email, password } = req.body;
+  let { registerName, registerEmail, registerPassword } = req.body;
 
-  bcrypt.hash(password, 10).then((hash) => {
+  bcrypt.hash(registerPassword, 10).then((hash) => {
     const create = new model.Users({
-      name,
-      email,
+      name: registerName,
+      email: registerEmail,
       password: hash,
     });
 
@@ -28,15 +28,15 @@ async function create_User(req, res) {
 // post /api/login
 async function login_User(req, res) {
   if (!req.body) return res.status(400).json("Post HTTP Data not Provided");
-  let { email, password } = req.body;
+  let { loginEmail, loginPassword } = req.body;
 
   // let email = "stefan@kremenovic.com";
   // let password = "babab";
 
-  model.Users.findOne({ email: email })
+  model.Users.findOne({ email: loginEmail })
     .then((user) => {
       bcrypt
-        .compare(password, user.password)
+        .compare(loginPassword, user.password)
         .then((passwordCheck) => {
           if (!passwordCheck) {
             return res.status(400).send({
@@ -77,10 +77,11 @@ async function login_User(req, res) {
     });
 }
 
-/*** INVOICES ***/
+// get /api/user
+async function get_User(req, res) {
+  // let { token } = req.body;
+  // let email = "stefan@kremenovic.com";
 
-// post /api/invoice
-async function create_Invoices(req, res) {
   try {
     //   get the token from the authorization header
     const token = await req.headers.authorization.split(" ")[1];
@@ -94,6 +95,32 @@ async function create_Invoices(req, res) {
     // pass the user down to the endpoints here
     req.user = user;
 
+    let data = await model.Users.find({ email: req.user.email });
+    return res.json(data[0].name);
+  } catch (error) {
+    res.status(401).json({
+      error: "Invalid request!",
+    });
+  }
+}
+
+/*** INVOICES ***/
+
+// post /api/invoice
+async function create_Invoices(req, res) {
+  try {
+    //   get the token from the authorization header
+    const token = await req.headers.authorization.split(" ")[1];
+
+    //check if the token matches the supposed origin
+    const decodedToken = await jwt.verify(token, "RANDOM-TOKEN");
+
+    // retrieve the user details of the logged in user
+    const userName = await decodedToken;
+
+    // pass the user down to the endpoints here
+    req.user = userName;
+
     if (!req.body) return res.status(400).json("Post HTTP Data not Provided");
     let {
       id,
@@ -105,10 +132,12 @@ async function create_Invoices(req, res) {
       status,
       billToFields,
       billFromFields,
+      user,
     } = req.body;
 
     const create = await new model.Invoices({
       id,
+      user,
       projectDescription,
       itemListFields,
       issueDate,
@@ -195,4 +224,5 @@ module.exports = {
   delete_Invoice,
   create_User,
   login_User,
+  get_User,
 };

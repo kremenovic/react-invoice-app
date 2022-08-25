@@ -10,4 +10,6 @@ routes
 routes.route("/api/register").post(controller.create_User);
 routes.route("/api/login").post(controller.login_User);
 
+routes.route("/api/user").post(controller.login_User).get(controller.get_User);
+
 module.exports = routes;
