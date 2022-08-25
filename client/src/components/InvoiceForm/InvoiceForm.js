@@ -1,9 +1,11 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { useFormContext } from "../../context/form_context";
 
 import { FaCalendarAlt, FaTrashAlt } from "react-icons/fa";
+
+import { useForm } from "react-hook-form";
 
 const InvoiceForm = () => {
   const {
@@ -32,6 +34,39 @@ const InvoiceForm = () => {
     handleDiscard,
   } = useFormContext();
 
+  const [itemListNumber, setItemListNumber] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleFormSubmit = (e) => {
+    const buttonType = window.event.submitter.name;
+
+    if (buttonType === "save") {
+      if (itemListFields.length === 0) {
+        setItemListNumber(true);
+      }
+      if (itemListFields.length > 1) {
+        setItemListNumber(false);
+
+        handleSaveSend(e);
+      }
+    }
+
+    if (buttonType === "draft") {
+      if (itemListFields.length === 0) {
+        setItemListNumber(true);
+      } else if (itemListFields.length > 1) {
+        setItemListNumber(false);
+
+        handleSaveDraft(e);
+      }
+    }
+  };
+
   useEffect(() => {
     handlePaymentDue();
     handlePaymentTermsChange();
@@ -51,7 +86,10 @@ const InvoiceForm = () => {
       >
         <div className="inner-section bg-white ">
           <h3 className="font-bold text-2xl px-10">New Invoice</h3>
-          <form className="mt-5 w-full px-10">
+          <form
+            className="mt-5 w-full px-10"
+            onSubmit={handleSubmit((e) => handleFormSubmit(e))}
+          >
             {/* Bill To */}
             <p className="text-sm font-bold text-purple-500">Bill To</p>
             {/* 1 col */}
@@ -63,11 +101,18 @@ const InvoiceForm = () => {
                 type="text"
                 id="billToStreetAddress"
                 name="billToStreetAddress"
-                className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billToStreetAddress ? "border-red-500" : ""
+                }`}
                 value={billToFields[0].billToStreetAddress}
-                onChange={(e) => handleToTextChange(e)}
-                required
+                {...register("billToStreetAddress", {
+                  required: "This field cannot be empty",
+                  onChange: (e) => handleToTextChange(e),
+                })}
               />
+              <div className="text-red-500">
+                {errors ? errors.billToStreetAddress?.message : ""}
+              </div>
             </div>
             {/* 3 col */}
             <div className="w-full flex justify-between flex-col mt-5 mb-10 lg:flex-row">
@@ -79,10 +124,18 @@ const InvoiceForm = () => {
                   type="text"
                   id="billToCity"
                   name="billToCity"
-                  className="border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg"
+                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billToCity ? "border-red-500" : ""
+                  }`}
                   value={billToFields[0].billToCity}
-                  onChange={(e) => handleToTextChange(e)}
+                  {...register("billToCity", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleToTextChange(e),
+                  })}
                 />
+                <div className="text-red-500">
+                  {errors ? errors.billToCity?.message : ""}
+                </div>
               </div>
               <div className="w-1/4">
                 <label htmlFor="billToPostCode" className="p-color">
@@ -92,10 +145,18 @@ const InvoiceForm = () => {
                   type="text"
                   id="billToPostCode"
                   name="billToPostCode"
-                  className="border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg"
+                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billToPostCode ? "border-red-500" : ""
+                  }`}
                   value={billToFields[0].billToPostCode}
-                  onChange={(e) => handleToTextChange(e)}
+                  {...register("billToPostCode", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleToTextChange(e),
+                  })}
                 />
+                <div className="text-red-500">
+                  {errors ? errors.billToPostCode?.message : ""}
+                </div>
               </div>
               <div className="w-1/4">
                 <label htmlFor="billToCountry" className="p-color">
@@ -105,10 +166,18 @@ const InvoiceForm = () => {
                   type="text"
                   id="billToCountry"
                   name="billToCountry"
-                  className="border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg"
+                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billToCountry ? "border-red-500" : ""
+                  }`}
                   value={billToFields[0].billToCountry}
-                  onChange={(e) => handleToTextChange(e)}
+                  {...register("billToCountry", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleToTextChange(e),
+                  })}
                 />
+                <div className="text-red-500">
+                  {errors ? errors.billToCountry?.message : ""}
+                </div>
               </div>
             </div>
             {/* Bill From */}
@@ -122,10 +191,18 @@ const InvoiceForm = () => {
                 type="text"
                 id="billFromClientName"
                 name="billFromClientName"
-                className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billFromClientName ? "border-red-500" : ""
+                }`}
                 value={billFromFields[0].billFromClientName}
-                onChange={(e) => handleFromTextChange(e)}
+                {...register("billFromClientName", {
+                  required: "This field cannot be empty",
+                  onChange: (e) => handleFromTextChange(e),
+                })}
               />
+              <div className="text-red-500">
+                {errors ? errors.billFromClientName?.message : ""}
+              </div>
             </div>
             {/* 1 col */}
             <div className="w-full flex flex-col mt-5">
@@ -136,10 +213,23 @@ const InvoiceForm = () => {
                 type="email"
                 id="billFromClientEmail"
                 name="billFromClientEmail"
-                className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billFromClientEmail ? "border-red-500" : ""
+                }`}
                 value={billFromFields[0].billFromClientEmail}
-                onChange={(e) => handleFromTextChange(e)}
+                {...register("billFromClientEmail", {
+                  required: "This field cannot be empty",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "Please enter a valid email",
+                  },
+                  onChange: (e) => handleFromTextChange(e),
+                })}
               />
+              <div className="text-red-500">
+                {errors ? errors.billFromClientEmail?.message : ""}
+              </div>
             </div>
             {/* 1 col */}
             <div className="w-full flex flex-col mt-5">
@@ -150,10 +240,18 @@ const InvoiceForm = () => {
                 type="text"
                 id="billFromStreetAddress"
                 name="billFromStreetAddress"
-                className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billFromStreetAddress ? "border-red-500" : ""
+                }`}
                 value={billFromFields[0].billFromStreetAddress}
-                onChange={(e) => handleFromTextChange(e)}
+                {...register("billFromStreetAddress", {
+                  required: "This field cannot be empty",
+                  onChange: (e) => handleFromTextChange(e),
+                })}
               />
+              <div className="text-red-500">
+                {errors ? errors.billFromStreetAddress?.message : ""}
+              </div>
             </div>
             {/* 3 col */}
             <div className="w-full flex flex-col justify-between mt-5 mb-10 lg:flex-row">
@@ -165,10 +263,18 @@ const InvoiceForm = () => {
                   type="text"
                   id="billFromCity"
                   name="billFromCity"
-                  className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billFromCity ? "border-red-500" : ""
+                  }`}
                   value={billFromFields[0].billFromCity}
-                  onChange={(e) => handleFromTextChange(e)}
+                  {...register("billFromCity", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleFromTextChange(e),
+                  })}
                 />
+                <div className="text-red-500">
+                  {errors ? errors.billFromCity?.message : ""}
+                </div>
               </div>
               <div className="w-1/4">
                 <label htmlFor="billFromPostCode" className="p-color">
@@ -178,10 +284,18 @@ const InvoiceForm = () => {
                   type="text"
                   id="billbillFromCode"
                   name="billbillFromCode"
-                  className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billbillFromCode ? "border-red-500" : ""
+                  }`}
                   value={billFromFields[0].billbillFromCode}
-                  onChange={(e) => handleFromTextChange(e)}
+                  {...register("billbillFromCode", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleFromTextChange(e),
+                  })}
                 />
+                <div className="text-red-500">
+                  {errors ? errors.billbillFromCode?.message : ""}
+                </div>
               </div>
               <div className="w-1/4">
                 <label htmlFor="billFromCountry" className="p-color">
@@ -191,10 +305,18 @@ const InvoiceForm = () => {
                   type="text"
                   id="billFromCountry"
                   name="billFromCountry"
-                  className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billFromCountry ? "border-red-500" : ""
+                  }`}
                   value={billFromFields[0].billFromCountry}
-                  onChange={(e) => handleFromTextChange(e)}
+                  {...register("billFromCountry", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleFromTextChange(e),
+                  })}
                 />
+                <div className="text-red-500">
+                  {errors ? errors.billFromCountry?.message : ""}
+                </div>
               </div>
             </div>
             {/* 3 col */}
@@ -264,16 +386,32 @@ const InvoiceForm = () => {
                 Project Description
               </label>
               <input
-                type="email"
+                type="text"
                 id="projectDescription"
+                name="projectDescription"
                 value={projectDescription}
-                className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
-                onChange={(e) => handleProjectDescription(e)}
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.projectDescription ? "border-red-500" : ""
+                }`}
+                {...register("projectDescription", {
+                  required: "This field cannot be empty",
+                  onChange: (e) => handleProjectDescription(e),
+                })}
               />
+              <div className="text-red-500">
+                {errors ? errors.projectDescription?.message : ""}
+              </div>
             </div>
             {/* add item felds */}
             {/* 5 col */}
             <h3 className="font-bold text-xl  p-color">Item List</h3>
+            <div className="text-red-500">
+              {errors ? errors.itemName?.message : ""}
+              <br></br>
+              {errors ? errors.quantity?.message : ""}
+              <br></br>
+              {errors ? errors.price?.message : ""}
+            </div>
             {itemListFields.map((input, index) => {
               return (
                 <div
@@ -284,31 +422,55 @@ const InvoiceForm = () => {
                     <label className="p-color">Item Name</label>
                     <input
                       type="text"
-                      className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                        errors.itemName ? "border-red-500" : ""
+                      }`}
                       name="itemName"
                       value={input.itemName}
-                      onChange={(e) => handleItemFieldsChange(index, e)}
+                      // onChange={(e) => handleItemFieldsChange(index, e)}
+                      {...register("itemName", {
+                        required: "* Item name cannot be empty",
+                        onChange: (e) => handleItemFieldsChange(index, e),
+                      })}
                     />
                   </div>
                   <div className="w-14">
                     <label className="p-color">Qty.</label>
                     <input
                       type="number"
-                      className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                        errors.quantity ? "border-red-500" : ""
+                      }`}
                       name="quantity"
                       value={input.quantity}
-                      onChange={(e) => handleItemFieldsChange(index, e)}
+                      {...register("quantity", {
+                        required: "This field cannot be empty",
+                        pattern: {
+                          value: /^[1-999999]+$/,
+                          message: "* Quantity needs to be at least 1",
+                        },
+
+                        onChange: (e) => handleItemFieldsChange(index, e),
+                      })}
                     />
                   </div>
                   <div className="w-28">
                     <label className="p-color">Price</label>
                     <input
-                      type="text"
-                      className="border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+                      type="number"
+                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                        errors.price ? "border-red-500" : ""
+                      }`}
                       name="price"
+                      min="1"
                       value={input.price}
-                      onChange={(e) => handleItemFieldsChange(index, e)}
+                      {...register("price", {
+                        required: "This field cannot be empty",
+
+                        onChange: (e) => handleItemFieldsChange(index, e),
+                      })}
                     />
+                    {console.log()}
                   </div>
                   <div className="w-28">
                     <label className="p-color">Total</label>
@@ -337,6 +499,11 @@ const InvoiceForm = () => {
             >
               + Add New Item
             </button>
+            <div className="text-red-500">
+              {itemListNumber
+                ? "* Please add at least one item to your list"
+                : "dada"}
+            </div>
             <div className="invoice-top-info bg-white rounded-xl my-8 flex flex-col justify-between lg:flex lg:flex-row">
               <div className="invoice-status flex items-center justify-between lg:justify-start">
                 <button
@@ -349,13 +516,15 @@ const InvoiceForm = () => {
               <div className="invoice-top-buttons flex items-center mt-5 justify-between lg:mt-0">
                 <button
                   className="lg:ml-5 ml-0 dark-bg p-color px-4 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
-                  onClick={(e) => handleSaveDraft(e)}
+                  type="submit"
+                  name="draft"
                 >
                   Save As Draft
                 </button>
                 <button
                   className="lg:ml-5 ml-0 add-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
-                  onClick={(e) => handleSaveSend(e)}
+                  type="submit"
+                  name="save"
                 >
                   Save & Send
                 </button>

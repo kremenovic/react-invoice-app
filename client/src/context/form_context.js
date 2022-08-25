@@ -47,7 +47,7 @@ const FormProvider = ({ children }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const selectRef = useRef("");
-  const { name } = useUserContext();
+  const { loginName } = useUserContext();
 
   const addFields = (e) => {
     e.preventDefault();
@@ -107,17 +107,17 @@ const FormProvider = ({ children }) => {
   };
 
   const handleSaveDraft = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setShowForm(false);
     const id = randomID();
-    dispatch({ type: "SAVE_DRAFT_BTN", payload: { id, token, name } });
+    dispatch({ type: "SAVE_DRAFT_BTN", payload: { id, token, loginName } });
   };
 
   const handleSaveSend = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setShowForm(false);
     const id = randomID();
-    dispatch({ type: "SAVE_SEND_BTN", payload: { id, token, name } });
+    dispatch({ type: "SAVE_SEND_BTN", payload: { id, token, loginName } });
   };
 
   const newInvoice = () => {
