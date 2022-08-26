@@ -96,7 +96,11 @@ async function get_User(req, res) {
     req.user = user;
 
     let data = await model.Users.find({ email: req.user.email });
-    return res.json(data[0].name);
+    let filter = await data.map((v) =>
+      Object.assign({}, { name: v.name, email: v.email })
+    );
+
+    return res.json(filter);
   } catch (error) {
     res.status(401).json({
       error: "Invalid request!",
