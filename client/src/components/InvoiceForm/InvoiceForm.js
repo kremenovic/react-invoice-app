@@ -32,14 +32,15 @@ const InvoiceForm = () => {
     handleSaveDraft,
     showForm,
     handleDiscard,
+    itemListNumber,
+    setItemListNumber,
   } = useFormContext();
-
-  const [itemListNumber, setItemListNumber] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm();
 
   const handleFormSubmit = (e) => {
@@ -49,9 +50,8 @@ const InvoiceForm = () => {
       if (itemListFields.length === 0) {
         setItemListNumber(true);
       }
-      if (itemListFields.length > 1) {
-        setItemListNumber(false);
-
+      if (itemListFields.length >= 1) {
+        reset();
         handleSaveSend(e);
       }
     }
@@ -59,13 +59,16 @@ const InvoiceForm = () => {
     if (buttonType === "draft") {
       if (itemListFields.length === 0) {
         setItemListNumber(true);
-      } else if (itemListFields.length > 1) {
-        setItemListNumber(false);
-
+      } else if (itemListFields.length >= 1) {
+        reset();
         handleSaveDraft(e);
       }
     }
   };
+
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful, reset]);
 
   useEffect(() => {
     handlePaymentDue();
@@ -502,13 +505,16 @@ const InvoiceForm = () => {
             <div className="text-red-500">
               {itemListNumber
                 ? "* Please add at least one item to your list"
-                : "dada"}
+                : ""}
             </div>
             <div className="invoice-top-info bg-white rounded-xl my-8 flex flex-col justify-between lg:flex lg:flex-row">
               <div className="invoice-status flex items-center justify-between lg:justify-start">
                 <button
                   className="edit-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
-                  onClick={(e) => handleDiscard(e)}
+                  onClick={(e) => {
+                    handleDiscard(e);
+                    reset();
+                  }}
                 >
                   Discard
                 </button>

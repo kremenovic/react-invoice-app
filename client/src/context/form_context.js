@@ -46,8 +46,9 @@ const FormProvider = ({ children }) => {
   const [state, dispatch] = useReducer(form_reducer, initialState);
   const [showCalendar, setShowCalendar] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [itemListNumber, setItemListNumber] = useState(false);
   const selectRef = useRef("");
-  const { loginName } = useUserContext();
+  const { userEmail } = useUserContext();
 
   const addFields = (e) => {
     e.preventDefault();
@@ -110,18 +111,19 @@ const FormProvider = ({ children }) => {
     // e.preventDefault();
     setShowForm(false);
     const id = randomID();
-    dispatch({ type: "SAVE_DRAFT_BTN", payload: { id, token, loginName } });
+    dispatch({ type: "SAVE_DRAFT_BTN", payload: { id, token, userEmail } });
   };
 
   const handleSaveSend = (e) => {
     // e.preventDefault();
     setShowForm(false);
     const id = randomID();
-    dispatch({ type: "SAVE_SEND_BTN", payload: { id, token, loginName } });
+    dispatch({ type: "SAVE_SEND_BTN", payload: { id, token, userEmail } });
   };
 
   const newInvoice = () => {
     setShowForm(true);
+    setItemListNumber(false);
     dispatch({ type: "NEW_INVOICE" });
   };
 
@@ -161,6 +163,8 @@ const FormProvider = ({ children }) => {
         showForm,
         newInvoice,
         handleDiscard,
+        setItemListNumber,
+        itemListNumber,
       }}
     >
       {children}

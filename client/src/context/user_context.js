@@ -13,6 +13,8 @@ export const UserProvider = ({ children }) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  const [userEmail, setUserEmail] = useState("");
+
   const URL = `http://localhost:8080/api/`;
   const token = cookies.get("TOKEN");
 
@@ -70,14 +72,15 @@ export const UserProvider = ({ children }) => {
       },
     });
     let data = res.data;
-    setLoginName(data);
+    setUserEmail(data[0].email);
+    setLoginName(data[0].name);
   };
 
   useEffect(() => {
     if (token) {
       getUser();
     }
-  }, []);
+  }, [loginName, userEmail]);
 
   return (
     <UserContext.Provider
@@ -90,6 +93,7 @@ export const UserProvider = ({ children }) => {
         handleLogin,
         handleLogout,
         loginName,
+        userEmail,
         registerName,
         registerEmail,
         registerPassword,
