@@ -39,6 +39,7 @@ const invoice_model = new Schema({
   paymentDue: { type: String, default: "" },
   issueDate: { type: Date, default: "" },
   itemListFields: { type: [] },
+  total: { type: Number, default: "" },
   projectDescription: { type: String, default: "" },
   billFromFields: {
     type: [

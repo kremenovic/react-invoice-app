@@ -137,11 +137,13 @@ async function create_Invoices(req, res) {
       billToFields,
       billFromFields,
       user,
+      total,
     } = req.body;
 
     const create = await new model.Invoices({
       id,
       user,
+      total,
       projectDescription,
       itemListFields,
       issueDate,
@@ -180,7 +182,34 @@ async function get_Invoice(req, res) {
     // pass the user down to the endpoints here
     req.user = user;
 
-    let data = await model.Invoices.find({});
+    let data = await model.Invoices.find({ user: req.user.email });
+    return res.json(data);
+  } catch (error) {
+    res.status(401).json({
+      error: "Invalid request!",
+    });
+  }
+}
+
+// get /api/invoices/:id
+async function get_SingleInvoice(req, res) {
+  try {
+    //   get the token from the authorization header
+    const token = await req.headers.authorization.split(" ")[1];
+
+    //check if the token matches the supposed origin
+    const decodedToken = await jwt.verify(token, "RANDOM-TOKEN");
+
+    // retrieve the user details of the logged in user
+    const user = await decodedToken;
+
+    // pass the user down to the endpoints here
+    req.user = user;
+
+    let ID = req.params.id;
+
+    let data = await model.Invoices.find({ id: ID });
+
     return res.json(data);
   } catch (error) {
     res.status(401).json({
@@ -226,6 +255,7 @@ module.exports = {
   create_Invoices,
   get_Invoice,
   delete_Invoice,
+  get_SingleInvoice,
   create_User,
   login_User,
   get_User,
