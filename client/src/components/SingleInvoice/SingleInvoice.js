@@ -1,15 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useInvoiceContext } from "../../context/invoices_context";
+import Moment from "react-moment";
+
+import axios from "axios";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
 
-const SingleInvoice = () => {
-  const { invoices } = useInvoiceContext();
+import { formatPrice } from "../../utils/helpers";
 
-  const getID = useParams();
-  const invoiceID = getID.id;
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
+const SingleInvoice = () => {
+  const [invoiceData, setInvoiceData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const URL = `http://localhost:8080/api/`;
+  const token = cookies.get("TOKEN");
+
+  const { id: invoiceID } = useParams();
+
+  const fetchInvoiceData = async () => {
+    setLoading(true);
+    let res = await axios.get(`${URL}invoices/${invoiceID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let data = res.data;
+    setInvoiceData(data[0]);
+    setLoading(false);
+  };
 
   const items = [
     {
@@ -26,6 +47,30 @@ const SingleInvoice = () => {
     },
   ];
 
+  useEffect(() => {
+    fetchInvoiceData();
+  }, [invoiceID]);
+
+  let {
+    id,
+    status,
+    billFromFields,
+    billToFields,
+    issueDate,
+    paymentDue,
+    projectDescription,
+    total,
+    itemListFields,
+  } = invoiceData;
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  {
+    console.log(invoiceData);
+  }
+
   return (
     <div className="container section">
       <Link to="/invoices" className="flex items-center">
@@ -35,10 +80,10 @@ const SingleInvoice = () => {
         <div className="invoice-status flex items-center justify-between lg:justify-start">
           Status
           <button
-            className={`pending px-5 py-2 rounded-md font-bold flex items-center ml-5`}
+            className={`${status} px-5 py-2 rounded-md font-bold flex items-center ml-5`}
           >
             <FaCircle style={{ fontSize: "8px" }} />
-            <p className="ml-2 text-xs">Pending</p>
+            <p className="ml-2 text-xs">{status}</p>
           </button>
         </div>
         <div className="invoice-top-buttons flex items-center mt-5 justify-between lg:mt-0">
@@ -57,9 +102,10 @@ const SingleInvoice = () => {
         <div className="flex  flex-col content-start lg:flex-row lg:justify-between">
           <div className="flex flex-col">
             <h2 className="font-bold text-base">
-              <span className="p-color ">#</span>XM9141
+              <span className="p-color ">#</span>
+              {id}
             </h2>
-            <p className="p-color text-xs">Graphic Design</p>
+            <p className="p-color text-xs">{projectDescription}</p>
           </div>
           <div className="flex flex-col p-color text-left text-xs mt-5 lg:text-right lg:mt-0">
             <p>19 Union Terrace</p>
@@ -71,10 +117,14 @@ const SingleInvoice = () => {
         <div className="text-left my-8 w-full grid-cols-2 grid lg:w-11/12 lg:justify-between lg:flex">
           <div className="flex flex-col">
             <p className="p-color text-xs mb-3">Invoice Date</p>
-            <h2 className="font-bold text-base">21 Aug 2021</h2>
+            <h2 className="font-bold text-base">
+              <Moment format="DD MMM YYYY">{issueDate}</Moment>
+            </h2>
             <div className="flex flex-col mt-8">
               <p className="p-color text-xs mb-3 lg:mt-0">Payment Due</p>
-              <h2 className="font-bold text-base">20 Sept 2021</h2>
+              <h2 className="font-bold text-base">
+                <Moment format="DD MMM YYYY">{parseInt(paymentDue)}</Moment>
+              </h2>
             </div>
           </div>
           <div className="flex flex-col">
@@ -89,7 +139,7 @@ const SingleInvoice = () => {
           </div>
           <div className="flex flex-col mt-8 lg:mt-0">
             <p className="p-color text-xs mb-3">Sent To</p>
-            <h2 className="font-bold text-base">alexgrim@mail.com</h2>
+            <h2 className="font-bold text-base"></h2>
           </div>
         </div>
         <div className="invoice-items  bg-gray-200 rounded-t-lg p-6 ">
@@ -108,13 +158,18 @@ const SingleInvoice = () => {
             </div>
           </div>
           <div className="invoice-items-body ">
-            {items.map((item, index) => {
+            {itemListFields?.map((item, index) => {
+              {
+                console.log(item);
+              }
               return (
                 <div
                   key={index}
                   className="item flex justify-between my-5 last:my-0"
                 >
-                  <h1 className="flex-initial w-64 font-bold">{item.name}</h1>
+                  <h1 className="flex-initial w-64 font-bold">
+                    {item.itemName}
+                  </h1>
                   <h1 className="flex-initial w-32 text-center font-bold p-color">
                     {item.quantity}
                   </h1>
@@ -131,7 +186,9 @@ const SingleInvoice = () => {
         </div>
         <div className="invoice-total dark-bg rounded-b-lg p-6 flex justify-between items-center">
           <p className="text-white text-xs">Amount Due</p>
-          <h3 className="text-white text-2xl font-bold">$556.00</h3>
+          <h3 className="text-white text-2xl font-bold">
+            {formatPrice(total)}
+          </h3>
         </div>
       </div>
     </div>

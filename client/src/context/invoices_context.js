@@ -1,12 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
-import data from "../assets/data.json";
+
+import axios from "axios";
+
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const InvoiceContext = React.createContext();
 export const InvoiceProvider = ({ children }) => {
   const [invoices, setInvoices] = useState([]);
 
-  useEffect(() => {
+  const URL = `http://localhost:8080/api/`;
+  const token = cookies.get("TOKEN");
+
+  const getInvoices = async () => {
+    let res = await axios.get(`${URL}invoices`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let data = res.data;
+    console.log(data);
     setInvoices(data);
+  };
+
+  useEffect(() => {
+    getInvoices();
   }, []);
 
   return (

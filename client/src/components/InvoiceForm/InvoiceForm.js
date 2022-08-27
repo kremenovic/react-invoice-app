@@ -93,8 +93,8 @@ const InvoiceForm = () => {
             className="mt-5 w-full px-10"
             onSubmit={handleSubmit((e) => handleFormSubmit(e))}
           >
-            {/* Bill To */}
-            <p className="text-sm font-bold text-purple-500">Bill To</p>
+            {/* Bill From */}
+            <p className="text-sm font-bold text-purple-500">Bill From </p>
             {/* 1 col */}
             <div className="w-full flex flex-col mt-5">
               <label htmlFor="billToStreetAddress" className="p-color">
@@ -183,8 +183,8 @@ const InvoiceForm = () => {
                 </div>
               </div>
             </div>
-            {/* Bill From */}
-            <p className="text-sm font-bold text-purple-500">Bill From</p>
+            {/* Bill To */}
+            <p className="text-sm font-bold text-purple-500">Bill To</p>
             {/* 1 col */}
             <div className="w-full flex flex-col mt-5">
               <label htmlFor="billFromClientName" className="p-color">
@@ -430,50 +430,30 @@ const InvoiceForm = () => {
                       }`}
                       name="itemName"
                       value={input.itemName}
-                      // onChange={(e) => handleItemFieldsChange(index, e)}
-                      {...register("itemName", {
-                        required: "* Item name cannot be empty",
-                        onChange: (e) => handleItemFieldsChange(index, e),
-                      })}
+                      onChange={(e) => handleItemFieldsChange(index, e)}
+                      min="1"
                     />
                   </div>
                   <div className="w-14">
                     <label className="p-color">Qty.</label>
                     <input
                       type="number"
-                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                        errors.quantity ? "border-red-500" : ""
-                      }`}
+                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg`}
                       name="quantity"
                       value={input.quantity}
-                      {...register("quantity", {
-                        required: "This field cannot be empty",
-                        pattern: {
-                          value: /^[1-999999]+$/,
-                          message: "* Quantity needs to be at least 1",
-                        },
-
-                        onChange: (e) => handleItemFieldsChange(index, e),
-                      })}
+                      min="1"
+                      onChange={(e) => handleItemFieldsChange(index, e)}
                     />
                   </div>
                   <div className="w-28">
                     <label className="p-color">Price</label>
                     <input
                       type="number"
-                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                        errors.price ? "border-red-500" : ""
-                      }`}
+                      className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg`}
                       name="price"
-                      min="1"
                       value={input.price}
-                      {...register("price", {
-                        required: "This field cannot be empty",
-
-                        onChange: (e) => handleItemFieldsChange(index, e),
-                      })}
+                      onChange={(e) => handleItemFieldsChange(index, e)}
                     />
-                    {console.log()}
                   </div>
                   <div className="w-28">
                     <label className="p-color">Total</label>

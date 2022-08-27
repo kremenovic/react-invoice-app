@@ -16,6 +16,7 @@ const FormContext = React.createContext();
 const initialState = {
   id: "",
   user: "",
+  total: "",
   billToFields: [
     {
       billToStreetAddress: "",

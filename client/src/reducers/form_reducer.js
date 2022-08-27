@@ -86,18 +86,30 @@ const form_reducer = (state, action) => {
       state.id = action.payload.id;
       state.user = action.payload.userEmail;
 
-      Axios.post(`http://localhost:8080/api/invoice`, state, {
+      let totalSum = state.itemListFields.reduce((a, b) => {
+        return parseFloat(a.total) + parseFloat(b.total);
+      });
+
+      state.total = totalSum.toFixed(2);
+      Axios.post(`http://localhost:8080/api/invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
         },
       });
+      console.log(state);
       return state;
 
     case "SAVE_SEND_BTN":
       state.status = "pending";
       state.id = action.payload.id;
       state.user = action.payload.userEmail;
-      Axios.post(`http://localhost:8080/api/invoice`, state, {
+      let totalSumSend = state.itemListFields.reduce((a, b) => {
+        return parseFloat(a.total) + parseFloat(b.total);
+      });
+
+      state.total = totalSumSend.toFixed(2);
+      console.log(state);
+      Axios.post(`http://localhost:8080/api/invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
         },
