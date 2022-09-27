@@ -97,145 +97,6 @@ const InvoiceForm = () => {
             <p className="text-sm font-bold text-purple-500">Bill From </p>
             {/* 1 col */}
             <div className="w-full flex flex-col mt-5">
-              <label htmlFor="billToStreetAddress" className="p-color">
-                Street Address
-              </label>
-              <input
-                type="text"
-                id="billToStreetAddress"
-                name="billToStreetAddress"
-                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                  errors.billToStreetAddress ? "border-red-500" : ""
-                }`}
-                value={billToFields[0].billToStreetAddress}
-                {...register("billToStreetAddress", {
-                  required: "This field cannot be empty",
-                  onChange: (e) => handleToTextChange(e),
-                })}
-              />
-              <div className="text-red-500">
-                {errors ? errors.billToStreetAddress?.message : ""}
-              </div>
-            </div>
-            {/* 3 col */}
-            <div className="w-full flex justify-between flex-col mt-5 mb-10 lg:flex-row">
-              <div className="w-1/4">
-                <label htmlFor="billToCity" className="p-color">
-                  City
-                </label>
-                <input
-                  type="text"
-                  id="billToCity"
-                  name="billToCity"
-                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
-                    errors.billToCity ? "border-red-500" : ""
-                  }`}
-                  value={billToFields[0].billToCity}
-                  {...register("billToCity", {
-                    required: "This field cannot be empty",
-                    onChange: (e) => handleToTextChange(e),
-                  })}
-                />
-                <div className="text-red-500">
-                  {errors ? errors.billToCity?.message : ""}
-                </div>
-              </div>
-              <div className="w-1/4">
-                <label htmlFor="billToPostCode" className="p-color">
-                  Post Code
-                </label>
-                <input
-                  type="text"
-                  id="billToPostCode"
-                  name="billToPostCode"
-                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
-                    errors.billToPostCode ? "border-red-500" : ""
-                  }`}
-                  value={billToFields[0].billToPostCode}
-                  {...register("billToPostCode", {
-                    required: "This field cannot be empty",
-                    onChange: (e) => handleToTextChange(e),
-                  })}
-                />
-                <div className="text-red-500">
-                  {errors ? errors.billToPostCode?.message : ""}
-                </div>
-              </div>
-              <div className="w-1/4">
-                <label htmlFor="billToCountry" className="p-color">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  id="billToCountry"
-                  name="billToCountry"
-                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
-                    errors.billToCountry ? "border-red-500" : ""
-                  }`}
-                  value={billToFields[0].billToCountry}
-                  {...register("billToCountry", {
-                    required: "This field cannot be empty",
-                    onChange: (e) => handleToTextChange(e),
-                  })}
-                />
-                <div className="text-red-500">
-                  {errors ? errors.billToCountry?.message : ""}
-                </div>
-              </div>
-            </div>
-            {/* Bill To */}
-            <p className="text-sm font-bold text-purple-500">Bill To</p>
-            {/* 1 col */}
-            <div className="w-full flex flex-col mt-5">
-              <label htmlFor="billFromClientName" className="p-color">
-                Client's Name
-              </label>
-              <input
-                type="text"
-                id="billFromClientName"
-                name="billFromClientName"
-                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                  errors.billFromClientName ? "border-red-500" : ""
-                }`}
-                value={billFromFields[0].billFromClientName}
-                {...register("billFromClientName", {
-                  required: "This field cannot be empty",
-                  onChange: (e) => handleFromTextChange(e),
-                })}
-              />
-              <div className="text-red-500">
-                {errors ? errors.billFromClientName?.message : ""}
-              </div>
-            </div>
-            {/* 1 col */}
-            <div className="w-full flex flex-col mt-5">
-              <label htmlFor="billFromClientEmail" className="p-color">
-                Client's Email
-              </label>
-              <input
-                type="email"
-                id="billFromClientEmail"
-                name="billFromClientEmail"
-                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                  errors.billFromClientEmail ? "border-red-500" : ""
-                }`}
-                value={billFromFields[0].billFromClientEmail}
-                {...register("billFromClientEmail", {
-                  required: "This field cannot be empty",
-                  pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: "Please enter a valid email",
-                  },
-                  onChange: (e) => handleFromTextChange(e),
-                })}
-              />
-              <div className="text-red-500">
-                {errors ? errors.billFromClientEmail?.message : ""}
-              </div>
-            </div>
-            {/* 1 col */}
-            <div className="w-full flex flex-col mt-5">
               <label htmlFor="billFromStreetAddress" className="p-color">
                 Street Address
               </label>
@@ -257,7 +118,7 @@ const InvoiceForm = () => {
               </div>
             </div>
             {/* 3 col */}
-            <div className="w-full flex flex-col justify-between mt-5 mb-10 lg:flex-row">
+            <div className="w-full flex justify-between flex-col mt-5 mb-10 lg:flex-row">
               <div className="w-1/4">
                 <label htmlFor="billFromCity" className="p-color">
                   City
@@ -266,7 +127,7 @@ const InvoiceForm = () => {
                   type="text"
                   id="billFromCity"
                   name="billFromCity"
-                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
                     errors.billFromCity ? "border-red-500" : ""
                   }`}
                   value={billFromFields[0].billFromCity}
@@ -285,19 +146,19 @@ const InvoiceForm = () => {
                 </label>
                 <input
                   type="text"
-                  id="billbillFromCode"
-                  name="billbillFromCode"
-                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                    errors.billbillFromCode ? "border-red-500" : ""
+                  id="billFromPostCode"
+                  name="billFromPostCode"
+                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billFromPostCode ? "border-red-500" : ""
                   }`}
-                  value={billFromFields[0].billbillFromCode}
-                  {...register("billbillFromCode", {
+                  value={billFromFields[0].billFromPostCode}
+                  {...register("billFromPostCode", {
                     required: "This field cannot be empty",
                     onChange: (e) => handleFromTextChange(e),
                   })}
                 />
                 <div className="text-red-500">
-                  {errors ? errors.billbillFromCode?.message : ""}
+                  {errors ? errors.billFromPostCode?.message : ""}
                 </div>
               </div>
               <div className="w-1/4">
@@ -308,7 +169,7 @@ const InvoiceForm = () => {
                   type="text"
                   id="billFromCountry"
                   name="billFromCountry"
-                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  className={`border h-12 mt-2 px-3 w-full focus:outline-none focus:border-purple-500 rounded-lg ${
                     errors.billFromCountry ? "border-red-500" : ""
                   }`}
                   value={billFromFields[0].billFromCountry}
@@ -319,6 +180,145 @@ const InvoiceForm = () => {
                 />
                 <div className="text-red-500">
                   {errors ? errors.billFromCountry?.message : ""}
+                </div>
+              </div>
+            </div>
+            {/* Bill To */}
+            <p className="text-sm font-bold text-purple-500">Bill To</p>
+            {/* 1 col */}
+            <div className="w-full flex flex-col mt-5">
+              <label htmlFor="billToClientName" className="p-color">
+                Client's Name
+              </label>
+              <input
+                type="text"
+                id="billToClientName"
+                name="billToClientName"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billToClientName ? "border-red-500" : ""
+                }`}
+                value={billToFields[0].billToClientName}
+                {...register("billToClientName", {
+                  required: "This field cannot be empty",
+                  onChange: (e) => handleToTextChange(e),
+                })}
+              />
+              <div className="text-red-500">
+                {errors ? errors.billToClientName?.message : ""}
+              </div>
+            </div>
+            {/* 1 col */}
+            <div className="w-full flex flex-col mt-5">
+              <label htmlFor="billToClientEmail" className="p-color">
+                Client's Email
+              </label>
+              <input
+                type="email"
+                id="billToClientEmail"
+                name="billToClientEmail"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billToClientEmail ? "border-red-500" : ""
+                }`}
+                value={billToFields[0].billToClientEmail}
+                {...register("billToClientEmail", {
+                  required: "This field cannot be empty",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "Please enter a valid email",
+                  },
+                  onChange: (e) => handleToTextChange(e),
+                })}
+              />
+              <div className="text-red-500">
+                {errors ? errors.billToClientEmail?.message : ""}
+              </div>
+            </div>
+            {/* 1 col */}
+            <div className="w-full flex flex-col mt-5">
+              <label htmlFor="billToStreetAddress" className="p-color">
+                Street Address
+              </label>
+              <input
+                type="text"
+                id="billToStreetAddress"
+                name="billToStreetAddress"
+                className={`border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                  errors.billToStreetAddress ? "border-red-500" : ""
+                }`}
+                value={billToFields[0].billToStreetAddress}
+                {...register("billToStreetAddress", {
+                  required: "This field cannot be empty",
+                  onChange: (e) => handleToTextChange(e),
+                })}
+              />
+              <div className="text-red-500">
+                {errors ? errors.billToStreetAddress?.message : ""}
+              </div>
+            </div>
+            {/* 3 col */}
+            <div className="w-full flex flex-col justify-between mt-5 mb-10 lg:flex-row">
+              <div className="w-1/4">
+                <label htmlFor="billToCity" className="p-color">
+                  City
+                </label>
+                <input
+                  type="text"
+                  id="billToCity"
+                  name="billToCity"
+                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billToCity ? "border-red-500" : ""
+                  }`}
+                  value={billToFields[0].billToCity}
+                  {...register("billToCity", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleToTextChange(e),
+                  })}
+                />
+                <div className="text-red-500">
+                  {errors ? errors.billToCity?.message : ""}
+                </div>
+              </div>
+              <div className="w-1/4">
+                <label htmlFor="billToCode" className="p-color">
+                  Post Code
+                </label>
+                <input
+                  type="text"
+                  id="billToCode"
+                  name="billToCode"
+                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billToCode ? "border-red-500" : ""
+                  }`}
+                  value={billToFields[0].billToCode}
+                  {...register("billToCode", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleToTextChange(e),
+                  })}
+                />
+                <div className="text-red-500">
+                  {errors ? errors.billToCode?.message : ""}
+                </div>
+              </div>
+              <div className="w-1/4">
+                <label htmlFor="billToCountry" className="p-color">
+                  Country
+                </label>
+                <input
+                  type="text"
+                  id="billToCountry"
+                  name="billToCountry"
+                  className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
+                    errors.billToCountry ? "border-red-500" : ""
+                  }`}
+                  value={billToFields[0].billToCountry}
+                  {...register("billToCountry", {
+                    required: "This field cannot be empty",
+                    onChange: (e) => handleToTextChange(e),
+                  })}
+                />
+                <div className="text-red-500">
+                  {errors ? errors.billToCountry?.message : ""}
                 </div>
               </div>
             </div>

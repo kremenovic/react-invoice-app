@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import userImage from "../../assets/image-avatar.jpg";
 import { useUserContext } from "../../context/user_context";
 
 const Profile = () => {
   const { loginName, handleLogout } = useUserContext();
+
   return (
     <div className="container section">
       <div className="content-top  text-center">

@@ -17,22 +17,22 @@ const initialState = {
   id: "",
   user: "",
   total: "",
-  billToFields: [
-    {
-      billToStreetAddress: "",
-      billToCity: "",
-      billToPostCode: "",
-      billToCountry: "",
-    },
-  ],
   billFromFields: [
     {
-      billFromClientName: "",
-      billFromClientEmail: "",
       billFromStreetAddress: "",
       billFromCity: "",
-      billbillFromCode: "",
+      billFromPostCode: "",
       billFromCountry: "",
+    },
+  ],
+  billToFields: [
+    {
+      billToClientName: "",
+      billToClientEmail: "",
+      billToStreetAddress: "",
+      billToCity: "",
+      billToCode: "",
+      billToCountry: "",
     },
   ],
   projectDescription: "",

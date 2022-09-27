@@ -9,10 +9,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <UserProvider>
-    <InvoiceProvider>
-      <FormProvider>
+    <FormProvider>
+      <InvoiceProvider>
         <App />
-      </FormProvider>
-    </InvoiceProvider>
+      </InvoiceProvider>
+    </FormProvider>
   </UserProvider>
 );

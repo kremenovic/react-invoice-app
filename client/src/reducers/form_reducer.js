@@ -55,22 +55,22 @@ const form_reducer = (state, action) => {
     case "DISCARD_BTN":
       return {
         ...state,
-        billToFields: [
-          {
-            billToStreetAddress: "",
-            billToCity: "",
-            billToPostCode: "",
-            billToCountry: "",
-          },
-        ],
         billFromFields: [
           {
-            billFromClientName: "",
-            billFromClientEmail: "",
             billFromStreetAddress: "",
             billFromCity: "",
-            billbillFromCode: "",
+            billFromPostCode: "",
             billFromCountry: "",
+          },
+        ],
+        billToFields: [
+          {
+            billToClientName: "",
+            billToClientEmail: "",
+            billToStreetAddress: "",
+            billToCity: "",
+            billToCode: "",
+            billToCountry: "",
           },
         ],
         projectDescription: "",
@@ -87,16 +87,20 @@ const form_reducer = (state, action) => {
       state.user = action.payload.userEmail;
 
       let totalSum = state.itemListFields.reduce((a, b) => {
-        return parseFloat(a.total) + parseFloat(b.total);
-      });
+        return parseFloat(a) + parseFloat(b.total);
+      }, 0);
 
-      state.total = totalSum.toFixed(2);
+      // state.total = totalSum.toFixed(2);
+      if (state.itemListFields.length > 1) {
+        state.total = parseFloat(totalSum.toFixed(2));
+      } else if (state.itemListFields.length === 1) {
+        state.total = parseFloat(state.itemListFields[0].total);
+      }
       Axios.post(`http://localhost:8080/api/invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
         },
       });
-      console.log(state);
       return state;
 
     case "SAVE_SEND_BTN":
@@ -104,11 +108,15 @@ const form_reducer = (state, action) => {
       state.id = action.payload.id;
       state.user = action.payload.userEmail;
       let totalSumSend = state.itemListFields.reduce((a, b) => {
-        return parseFloat(a.total) + parseFloat(b.total);
-      });
+        return parseFloat(a) + parseFloat(b.total);
+      }, 0);
 
-      state.total = totalSumSend.toFixed(2);
-      console.log(state);
+      if (state.itemListFields.length > 1) {
+        state.total = parseFloat(totalSumSend.toFixed(2));
+      } else if (state.itemListFields.length === 1) {
+        state.total = parseFloat(state.itemListFields[0].total);
+      }
+
       Axios.post(`http://localhost:8080/api/invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
@@ -119,22 +127,22 @@ const form_reducer = (state, action) => {
     case "NEW_INVOICE":
       return {
         ...state,
-        billToFields: [
-          {
-            billToStreetAddress: "",
-            billToCity: "",
-            billToPostCode: "",
-            billToCountry: "",
-          },
-        ],
         billFromFields: [
           {
-            billFromClientName: "",
-            billFromClientEmail: "",
             billFromStreetAddress: "",
             billFromCity: "",
-            billbillFromCode: "",
+            billFromPostCode: "",
             billFromCountry: "",
+          },
+        ],
+        billToFields: [
+          {
+            billToClientName: "",
+            billToClientEmail: "",
+            billToStreetAddress: "",
+            billToCity: "",
+            billToCode: "",
+            billToCountry: "",
           },
         ],
         projectDescription: "",

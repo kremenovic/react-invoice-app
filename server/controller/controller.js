@@ -235,7 +235,8 @@ async function delete_Invoice(req, res) {
 
     if (!req.body)
       return res.status(400).json({ message: `Request Body Not Found` });
-    await model.Invoices.deleteOne(req.body, function (err) {
+
+    await model.Invoices.findByIdAndDelete(req.body._id, function (err) {
       if (!err) return res.json("Record Deleted");
     })
       .clone()
@@ -249,7 +250,44 @@ async function delete_Invoice(req, res) {
   }
 }
 
-//get
+// update status only /api/invoice
+
+async function update_Status(req, res) {
+  try {
+    //   get the token from the authorization header
+    const token = await req.headers.authorization.split(" ")[1];
+
+    //check if the token matches the supposed origin
+    const decodedToken = await jwt.verify(token, "RANDOM-TOKEN");
+
+    // retrieve the user details of the logged in user
+    const user = await decodedToken;
+
+    // pass the user down to the endpoints here
+    req.user = user;
+
+    if (!req.body)
+      return res.status(400).json({ message: `Request Body Not Found` });
+    console.log(req.body.data.status);
+    await model.Invoices.findByIdAndUpdate(
+      req.body.data._id,
+      { status: req.body.data.status },
+      function (err) {
+        if (!err) {
+          return res.json("Record Updated");
+        }
+      }
+    )
+      .clone()
+      .catch(function (err) {
+        return res.json("Error While Updating Invoice");
+      });
+  } catch (error) {
+    res.status(401).json({
+      error: "Invalid request!",
+    });
+  }
+}
 
 module.exports = {
   create_Invoices,
@@ -259,4 +297,5 @@ module.exports = {
   create_User,
   login_User,
   get_User,
+  update_Status,
 };

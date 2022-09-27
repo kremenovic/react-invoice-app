@@ -5,7 +5,8 @@ routes
   .route("/api/invoices")
   .post(controller.create_Invoices)
   .get(controller.get_Invoice)
-  .delete(controller.delete_Invoice);
+  .delete(controller.delete_Invoice)
+  .put(controller.update_Status);
 
 routes.route("/api/invoices/:id").get(controller.get_SingleInvoice);
 

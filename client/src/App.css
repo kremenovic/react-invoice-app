@@ -160,6 +160,23 @@ h1 {
   box-shadow: 1px 0px 14px 2px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 }
 
+.center-delete {
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  top: 50%;
+  left: 50%;
+}
+
+.center-delete.active {
+  transform: translate(-50%, -50%) scale(1);
+  transition: 1s;
+}
+
+.showDelete {
+  display: flex;
+  transition: 1s;
+}
+
 
 @media only screen and (max-width: 768px) {
 

@@ -41,25 +41,25 @@ const invoice_model = new Schema({
   itemListFields: { type: [] },
   total: { type: Number, default: "" },
   projectDescription: { type: String, default: "" },
-  billFromFields: {
-    type: [
-      {
-        billFromClientName: String,
-        billFromClientEmail: String,
-        billFromStreetAddress: String,
-        billFromCity: String,
-        billFromCode: String,
-        billFromCountry: String,
-      },
-    ],
-  },
   billToFields: {
     type: [
       {
+        billToClientName: String,
+        billToClientEmail: String,
         billToStreetAddress: String,
         billToCity: String,
-        billToPostCode: String,
+        billToCode: String,
         billToCountry: String,
+      },
+    ],
+  },
+  billFromFields: {
+    type: [
+      {
+        billFromStreetAddress: String,
+        billFromCity: String,
+        billFromPostCode: String,
+        billFromCountry: String,
       },
     ],
   },
