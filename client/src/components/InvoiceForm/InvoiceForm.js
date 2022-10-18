@@ -88,7 +88,7 @@ const InvoiceForm = () => {
         }`}
       >
         <div className="inner-section bg-white ">
-          <h3 className="font-bold text-2xl px-10">New Invoice</h3>
+          <h3 className="font-bold text-2xl px-10">New Invoices</h3>
           <form
             className="mt-5 w-full px-10"
             onSubmit={handleSubmit((e) => handleFormSubmit(e))}
