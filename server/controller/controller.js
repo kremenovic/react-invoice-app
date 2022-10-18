@@ -268,7 +268,6 @@ async function update_Status(req, res) {
 
     if (!req.body)
       return res.status(400).json({ message: `Request Body Not Found` });
-    console.log(req.body.data.status);
     await model.Invoices.findByIdAndUpdate(
       req.body.data._id,
       { status: req.body.data.status },
