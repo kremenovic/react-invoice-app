@@ -12,7 +12,7 @@ export const InvoiceProvider = ({ children }) => {
   const [status, setStatus] = useState([]);
   const [invoiceStatus, setInvoiceStatus] = useState({
     status: "",
-    isTrue: false,
+    isTrue: null,
   });
 
   const { showForm } = useFormContext();

@@ -34,20 +34,36 @@ const SingleInvoice = () => {
     });
     let data = res.data;
     setInvoiceData(data[0]);
-    if (res.data[0].status === "draft") {
-      setInvoiceStatus((invoiceStatus) => ({
-        ...invoiceStatus,
-        status: res.data[0].status,
-        isTrue: false,
-      }));
+
+    switch (res.data[0].status) {
+      case "paid":
+        setInvoiceStatus((invoiceStatus) => ({
+          ...invoiceStatus,
+          status: res.data[0].status,
+          isTrue: false,
+        }));
+        break;
+      case "pending":
+        setInvoiceStatus((invoiceStatus) => ({
+          ...invoiceStatus,
+          status: res.data[0].status,
+          isTrue: true,
+        }));
+        break;
+      case "draft":
+        setInvoiceStatus((invoiceStatus) => ({
+          ...invoiceStatus,
+          status: res.data[0].status,
+          isTrue: false,
+        }));
+        break;
     }
-    if (res.data[0].status === "paid") {
-      setInvoiceStatus((invoiceStatus) => ({
-        ...invoiceStatus,
-        status: res.data[0].status,
-        isTrue: true,
-      }));
-    }
+
+    // setInvoiceStatus((invoiceStatus) => ({
+    //   ...invoiceStatus,
+    //   status: res.data[0].status,
+    //   isTrue: false,
+    // }));
     setLoading(false);
   };
 
@@ -64,22 +80,17 @@ const SingleInvoice = () => {
   };
 
   const updateInvoice = (e) => {
-    if (invoiceStatus.status === "draft") {
+    if (invoiceStatus.status === "pending") {
       axios.put(
         `http://localhost:8080/api/invoices`,
         { data: { _id: e.target.dataset.id, status: "paid" } },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-    } else if (invoiceStatus.status === "paid") {
-      axios.put(
-        `http://localhost:8080/api/invoices`,
-        { data: { _id: e.target.dataset.id, status: "draft" } },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
     }
     setInvoiceStatus((invoiceStatus) => ({
       ...invoiceStatus,
-      isTrue: !invoiceStatus.isTrue,
+      status: "paid",
+      isTrue: false,
     }));
   };
 
@@ -113,14 +124,10 @@ const SingleInvoice = () => {
           <div className="invoice-status flex items-center justify-between lg:justify-start">
             Status
             <button
-              className={`${
-                invoiceStatus.isTrue ? "paid" : "draft"
-              } px-5 py-2 rounded-md font-bold flex items-center ml-5`}
+              className={`${invoiceStatus.status} px-5 py-2 rounded-md font-bold flex items-center ml-5`}
             >
               <FaCircle style={{ fontSize: "8px" }} />
-              <p className="ml-2 text-xs">{`${
-                invoiceStatus.isTrue ? "Paid" : "Draft"
-              }`}</p>
+              <p className="ml-2 text-xs">{`${invoiceStatus.status}`}</p>
             </button>
           </div>
           <div className="invoice-top-buttons flex items-center mt-5 justify-between lg:mt-0">
@@ -133,13 +140,15 @@ const SingleInvoice = () => {
             >
               Delete
             </button>
-            <button
-              className="lg:ml-5 ml-0 add-invoice px-4 pl-3 py-2 rounded-3xl font-bold flex items-center cursor-pointer"
-              data-id={_id}
-              onClick={(e) => updateInvoice(e)}
-            >
-              {`Mark as ${invoiceStatus.isTrue ? "Draft" : "Paid"}`}
-            </button>
+            {invoiceStatus.isTrue && (
+              <button
+                className="lg:ml-5 ml-0 add-invoice px-4 pl-3 py-2 rounded-3xl font-bold flex items-center cursor-pointer"
+                data-id={_id}
+                onClick={(e) => updateInvoice(e)}
+              >
+                Mark as Paid
+              </button>
+            )}
           </div>
         </div>
         <div className="invoice-bottom-info bg-white p-6 rounded-xl">
