@@ -55,16 +55,6 @@ const InvoiceForm = () => {
         handleSaveSend(e);
       }
     }
-
-    if (buttonType === "draft") {
-      console.log("draft");
-      if (itemListFields.length === 0) {
-        setItemListNumber(true);
-      } else if (itemListFields.length >= 1) {
-        reset();
-        handleSaveDraft(e);
-      }
-    }
   };
 
   const blockInvalidChar = (e) =>
