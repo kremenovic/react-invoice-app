@@ -57,6 +57,7 @@ const InvoiceForm = () => {
     }
 
     if (buttonType === "draft") {
+      console.log("draft");
       if (itemListFields.length === 0) {
         setItemListNumber(true);
       } else if (itemListFields.length >= 1) {
@@ -65,6 +66,9 @@ const InvoiceForm = () => {
       }
     }
   };
+
+  const blockInvalidChar = (e) =>
+    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
 
   useEffect(() => {
     reset();
@@ -113,7 +117,7 @@ const InvoiceForm = () => {
                   onChange: (e) => handleFromTextChange(e),
                 })}
               />
-              <div className="text-red-500">
+              <div className="text-red-500 text-xs">
                 {errors ? errors.billFromStreetAddress?.message : ""}
               </div>
             </div>
@@ -136,7 +140,7 @@ const InvoiceForm = () => {
                     onChange: (e) => handleFromTextChange(e),
                   })}
                 />
-                <div className="text-red-500">
+                <div className="text-red-500 text-xs">
                   {errors ? errors.billFromCity?.message : ""}
                 </div>
               </div>
@@ -157,7 +161,7 @@ const InvoiceForm = () => {
                     onChange: (e) => handleFromTextChange(e),
                   })}
                 />
-                <div className="text-red-500">
+                <div className="text-red-500 text-xs">
                   {errors ? errors.billFromPostCode?.message : ""}
                 </div>
               </div>
@@ -178,7 +182,7 @@ const InvoiceForm = () => {
                     onChange: (e) => handleFromTextChange(e),
                   })}
                 />
-                <div className="text-red-500">
+                <div className="text-red-500 text-xs">
                   {errors ? errors.billFromCountry?.message : ""}
                 </div>
               </div>
@@ -203,7 +207,7 @@ const InvoiceForm = () => {
                   onChange: (e) => handleToTextChange(e),
                 })}
               />
-              <div className="text-red-500">
+              <div className="text-red-500 text-xs">
                 {errors ? errors.billToClientName?.message : ""}
               </div>
             </div>
@@ -230,7 +234,7 @@ const InvoiceForm = () => {
                   onChange: (e) => handleToTextChange(e),
                 })}
               />
-              <div className="text-red-500">
+              <div className="text-red-500 text-xs">
                 {errors ? errors.billToClientEmail?.message : ""}
               </div>
             </div>
@@ -252,7 +256,7 @@ const InvoiceForm = () => {
                   onChange: (e) => handleToTextChange(e),
                 })}
               />
-              <div className="text-red-500">
+              <div className="text-red-500 text-xs">
                 {errors ? errors.billToStreetAddress?.message : ""}
               </div>
             </div>
@@ -267,7 +271,7 @@ const InvoiceForm = () => {
                   id="billToCity"
                   name="billToCity"
                   className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg ${
-                    errors.billToCity ? "border-red-500" : ""
+                    errors.billToCity ? "border-red-500 text-xs" : ""
                   }`}
                   value={billToFields[0].billToCity}
                   {...register("billToCity", {
@@ -275,7 +279,7 @@ const InvoiceForm = () => {
                     onChange: (e) => handleToTextChange(e),
                   })}
                 />
-                <div className="text-red-500">
+                <div className="text-red-500 text-xs">
                   {errors ? errors.billToCity?.message : ""}
                 </div>
               </div>
@@ -296,7 +300,7 @@ const InvoiceForm = () => {
                     onChange: (e) => handleToTextChange(e),
                   })}
                 />
-                <div className="text-red-500">
+                <div className="text-red-500 text-xs">
                   {errors ? errors.billToCode?.message : ""}
                 </div>
               </div>
@@ -317,7 +321,7 @@ const InvoiceForm = () => {
                     onChange: (e) => handleToTextChange(e),
                   })}
                 />
-                <div className="text-red-500">
+                <div className="text-red-500 text-xs">
                   {errors ? errors.billToCountry?.message : ""}
                 </div>
               </div>
@@ -401,7 +405,7 @@ const InvoiceForm = () => {
                   onChange: (e) => handleProjectDescription(e),
                 })}
               />
-              <div className="text-red-500">
+              <div className="text-red-500 text-xs">
                 {errors ? errors.projectDescription?.message : ""}
               </div>
             </div>
@@ -431,7 +435,8 @@ const InvoiceForm = () => {
                       name="itemName"
                       value={input.itemName}
                       onChange={(e) => handleItemFieldsChange(index, e)}
-                      min="1"
+                      required
+                      // min="1"
                     />
                   </div>
                   <div className="w-14">
@@ -442,6 +447,7 @@ const InvoiceForm = () => {
                       name="quantity"
                       value={input.quantity}
                       min="1"
+                      required
                       onChange={(e) => handleItemFieldsChange(index, e)}
                     />
                   </div>
@@ -452,7 +458,11 @@ const InvoiceForm = () => {
                       className={`border h-12 mt-2 w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg`}
                       name="price"
                       value={input.price}
+                      required
+                      step="any"
+                      min="1"
                       onChange={(e) => handleItemFieldsChange(index, e)}
+                      onKeyDown={blockInvalidChar}
                     />
                   </div>
                   <div className="w-28">
@@ -482,7 +492,7 @@ const InvoiceForm = () => {
             >
               + Add New Item
             </button>
-            <div className="text-red-500">
+            <div className="text-red-500 text-xs">
               {itemListNumber
                 ? "* Please add at least one item to your list"
                 : ""}
@@ -502,8 +512,9 @@ const InvoiceForm = () => {
               <div className="invoice-top-buttons flex items-center mt-5 justify-between lg:mt-0">
                 <button
                   className="lg:ml-5 ml-0 dark-bg p-color px-4 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
-                  type="submit"
+                  type="button"
                   name="draft"
+                  onClick={(e) => handleSaveDraft(e)}
                 >
                   Save As Draft
                 </button>
