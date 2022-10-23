@@ -124,6 +124,59 @@ const form_reducer = (state, action) => {
       });
       return { ...state };
 
+    case "SAVE_UPDATE_INVOICE":
+      state.status = "pending";
+      let totalSumUpdate = state.itemListFields.reduce((a, b) => {
+        return parseFloat(a) + parseFloat(b.total);
+      }, 0);
+
+      if (state.itemListFields.length > 1) {
+        state.total = parseFloat(totalSumUpdate.toFixed(2));
+      } else if (state.itemListFields.length === 1) {
+        state.total = parseFloat(state.itemListFields[0].total);
+      }
+      Axios.put(
+        `http://localhost:8080/api/invoices/${state.id}`,
+        { data: { _id: action.payload.editID, state } },
+        { headers: { Authorization: `Bearer ${action.payload.token}` } }
+      );
+      return { ...state };
+
+    case "SET_UPDATE_INVOICE":
+      return {
+        ...state,
+        id: action.payload.data.id,
+        user: action.payload.data.user,
+        billFromFields: [
+          {
+            billFromStreetAddress:
+              action.payload.data.billFromFields[0].billFromStreetAddress,
+            billFromCity: action.payload.data.billFromFields[0].billFromCity,
+            billFromPostCode:
+              action.payload.data.billFromFields[0].billFromPostCode,
+            billFromCountry:
+              action.payload.data.billFromFields[0].billFromCountry,
+          },
+        ],
+        billToFields: [
+          {
+            billToClientName:
+              action.payload.data.billToFields[0].billToClientName,
+            billToClientEmail:
+              action.payload.data.billToFields[0].billToClientEmail,
+            billToStreetAddress:
+              action.payload.data.billToFields[0].billToStreetAddress,
+            billToCity: action.payload.data.billToFields[0].billToCity,
+            billToCode: action.payload.data.billToFields[0].billToCode,
+            billToCountry: action.payload.data.billToFields[0].billToCountry,
+          },
+        ],
+        projectDescription: action.payload.data.projectDescription,
+        itemListFields: action.payload.data.itemListFields,
+        issueDate: new Date(action.payload.data.issueDate),
+        paymentTerms: action.payload.data.paymentTerms,
+      };
+
     case "NEW_INVOICE":
       return {
         ...state,

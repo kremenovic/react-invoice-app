@@ -34,6 +34,9 @@ const InvoiceForm = () => {
     handleDiscard,
     itemListNumber,
     setItemListNumber,
+    isEdit,
+    setIsEdit,
+    handleUpdate,
   } = useFormContext();
 
   const {
@@ -348,7 +351,7 @@ const InvoiceForm = () => {
               </div>
               <div className="w-1/4">
                 <label htmlFor="paymentTerms" className="p-color">
-                  Payyment Terms
+                  Payment Terms
                 </label>
                 <select
                   name="paymentTerms"
@@ -501,7 +504,11 @@ const InvoiceForm = () => {
               </div>
               <div className="invoice-top-buttons flex items-center mt-5 justify-between lg:mt-0">
                 <button
-                  className="lg:ml-5 ml-0 dark-bg p-color px-4 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
+                  className={
+                    isEdit
+                      ? "hidden"
+                      : "lg:ml-5 ml-0 dark-bg p-color px-4 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
+                  }
                   type="button"
                   name="draft"
                   onClick={(e) => handleSaveDraft(e)}
@@ -509,7 +516,23 @@ const InvoiceForm = () => {
                   Save As Draft
                 </button>
                 <button
-                  className="lg:ml-5 ml-0 add-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
+                  className={
+                    isEdit
+                      ? "lg:ml-5 ml-0 add-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
+                      : "hidden"
+                  }
+                  type="button"
+                  name="update"
+                  onClick={(e) => handleUpdate(e)}
+                >
+                  Update
+                </button>
+                <button
+                  className={
+                    isEdit
+                      ? "hidden"
+                      : "lg:ml-5 ml-0 add-invoice px-4 pl-3 py-3 rounded-3xl font-bold flex items-center cursor-pointer"
+                  }
                   type="submit"
                   name="save"
                 >

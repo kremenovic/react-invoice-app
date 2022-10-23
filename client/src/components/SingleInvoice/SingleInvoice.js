@@ -8,6 +8,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
 
 import { useInvoiceContext } from "../../context/invoices_context";
+import { useFormContext } from "../../context/form_context";
 
 import { formatPrice } from "../../utils/helpers";
 import DeleteInvoice from "../DeleteInvoice/DeleteInvoice";
@@ -17,9 +18,12 @@ const cookies = new Cookies();
 
 const SingleInvoice = () => {
   const { invoiceStatus, setInvoiceStatus } = useInvoiceContext();
+
   const [invoiceData, setInvoiceData] = useState({});
   const [loading, setLoading] = useState(true);
   const [showDelete, setShowDelete] = useState(false);
+
+  const { updateInvoice, isEdit, setIsEdit } = useFormContext();
 
   const URL = `http://localhost:8080/api/`;
   const token = cookies.get("TOKEN");
@@ -59,11 +63,6 @@ const SingleInvoice = () => {
         break;
     }
 
-    // setInvoiceStatus((invoiceStatus) => ({
-    //   ...invoiceStatus,
-    //   status: res.data[0].status,
-    //   isTrue: false,
-    // }));
     setLoading(false);
   };
 
@@ -79,7 +78,7 @@ const SingleInvoice = () => {
     window.location.href = "/invoices";
   };
 
-  const updateInvoice = (e) => {
+  const updateStatus = (e) => {
     if (invoiceStatus.status === "pending") {
       axios.put(
         `http://localhost:8080/api/invoices`,
@@ -94,20 +93,24 @@ const SingleInvoice = () => {
     }));
   };
 
+  const editInvoice = (e) => {
+    updateInvoice(invoiceData, e);
+  };
+
   useEffect(() => {
     fetchInvoiceData();
-  }, [invoiceID]);
+  }, [invoiceID, isEdit]);
 
   let {
     _id,
     id,
-    billFromFields,
-    billToFields,
-    issueDate,
-    paymentDue,
-    projectDescription,
+    billFromFields: billFrom,
+    billToFields: billTo,
+    issueDate: issue,
+    paymentDue: due,
+    projectDescription: description,
     total,
-    itemListFields,
+    itemListFields: items,
   } = invoiceData;
 
   if (loading) {
@@ -131,7 +134,11 @@ const SingleInvoice = () => {
             </button>
           </div>
           <div className="invoice-top-buttons flex items-center mt-5 justify-between lg:mt-0">
-            <button className="lg:ml-5 ml-0 edit-invoice px-4 pl-3 py-2 rounded-3xl font-bold flex items-center cursor-pointer">
+            <button
+              className="lg:ml-5 ml-0 edit-invoice px-4 pl-3 py-2 rounded-3xl font-bold flex items-center cursor-pointer"
+              data-id={_id}
+              onClick={(e) => editInvoice(e)}
+            >
               Edit
             </button>
             <button
@@ -144,7 +151,7 @@ const SingleInvoice = () => {
               <button
                 className="lg:ml-5 ml-0 add-invoice px-4 pl-3 py-2 rounded-3xl font-bold flex items-center cursor-pointer"
                 data-id={_id}
-                onClick={(e) => updateInvoice(e)}
+                onClick={(e) => updateStatus(e)}
               >
                 Mark as Paid
               </button>
@@ -158,50 +165,46 @@ const SingleInvoice = () => {
                 <span className="p-color ">#</span>
                 {id}
               </h2>
-              <p className="p-color text-xs">{projectDescription}</p>
+              <p className="p-color text-xs">{description}</p>
             </div>
             <div className="flex flex-col p-color text-left text-xs mt-5 lg:text-right lg:mt-0">
-              <p>{billFromFields[0].billFromStreetAddress}</p>
-              <p>{billFromFields[0].billFromCity}</p>
-              <p>{billFromFields[0].billFromPostCode}</p>
-              <p>{billFromFields[0].billFromCountry}</p>
+              <p>{billFrom[0].billFromStreetAddress}</p>
+              <p>{billFrom[0].billFromCity}</p>
+              <p>{billFrom[0].billFromPostCode}</p>
+              <p>{billFrom[0].billFromCountry}</p>
             </div>
           </div>
           <div className="text-left my-8 w-full grid-cols-2 grid lg:w-11/12 lg:justify-between lg:flex">
             <div className="flex flex-col">
               <p className="p-color text-xs mb-3">Invoice Date</p>
               <h2 className="font-bold text-base">
-                <Moment format="DD MMM YYYY">{issueDate}</Moment>
+                <Moment format="DD MMM YYYY">{issue}</Moment>
               </h2>
               <div className="flex flex-col mt-8">
                 <p className="p-color text-xs mb-3 lg:mt-0">Payment Due</p>
                 <h2 className="font-bold text-base">
-                  <Moment format="DD MMM YYYY">{parseInt(paymentDue)}</Moment>
+                  <Moment format="DD MMM YYYY">{parseInt(due)}</Moment>
                 </h2>
               </div>
             </div>
             <div className="flex flex-col">
               <p className="p-color text-xs mb-3">Bill To</p>
               <h2 className="font-bold text-base">
-                {billToFields[0]?.billToClientName}
+                {billTo[0]?.billToClientName}
               </h2>
               <div className="address mt-2">
                 <p className="p-color text-xs">
-                  {billToFields[0].billToStreetAddress}
+                  {billTo[0].billToStreetAddress}
                 </p>
-                <p className="p-color text-xs">
-                  {billToFields[0]?.billToCity}{" "}
-                </p>
-                <p className="p-color text-xs">{billToFields[0]?.billToCode}</p>
-                <p className="p-color text-xs">
-                  {billToFields[0].billToCountry}
-                </p>
+                <p className="p-color text-xs">{billTo[0]?.billToCity} </p>
+                <p className="p-color text-xs">{billTo[0]?.billToCode}</p>
+                <p className="p-color text-xs">{billTo[0].billToCountry}</p>
               </div>
             </div>
             <div className="flex flex-col mt-8 lg:mt-0">
               <p className="p-color text-xs mb-3">Sent To</p>
               <h2 className="font-bold text-base">
-                {billToFields[0].billToClientEmail}
+                {billTo[0].billToClientEmail}
               </h2>
             </div>
           </div>
@@ -221,7 +224,7 @@ const SingleInvoice = () => {
               </div>
             </div>
             <div className="invoice-items-body ">
-              {itemListFields?.map((item, index) => {
+              {items?.map((item, index) => {
                 return (
                   <div
                     key={index}
