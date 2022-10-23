@@ -288,6 +288,54 @@ async function update_Status(req, res) {
   }
 }
 
+// edit invoice /api/invoices
+
+async function update_Invoice(req, res) {
+  try {
+    //   get the token from the authorization header
+    const token = await req.headers.authorization.split(" ")[1];
+
+    //check if the token matches the supposed origin
+    const decodedToken = await jwt.verify(token, "RANDOM-TOKEN");
+
+    // retrieve the user details of the logged in user
+    const user = await decodedToken;
+
+    // pass the user down to the endpoints here
+    req.user = user;
+    if (!req.body)
+      return res.status(400).json({ message: `Request Body Not Found` });
+    await model.Invoices.findByIdAndUpdate(
+      req.body.data._id,
+      {
+        status: req.body.data.state.status,
+        total: req.body.data.state.total,
+        projectDescription: req.body.data.state.projectDescription,
+        itemListFields: req.body.data.state.itemListFields,
+        issueDate: req.body.data.state.issueDate,
+        paymentDue: req.body.data.state.paymentDue,
+        paymentTerms: req.body.data.state.paymentTerms,
+        billToFields: req.body.data.state.billToFields,
+        billFromFields: req.body.data.state.billFromFields,
+      },
+
+      function (err) {
+        if (!err) {
+          return res.json("Record Updated");
+        }
+      }
+    )
+      .clone()
+      .catch(function (err) {
+        return res.json("Error While Updating Invoice");
+      });
+  } catch (error) {
+    res.status(401).json({
+      error: "Invalid request!",
+    });
+  }
+}
+
 module.exports = {
   create_Invoices,
   get_Invoice,
@@ -297,4 +345,5 @@ module.exports = {
   login_User,
   get_User,
   update_Status,
+  update_Invoice,
 };

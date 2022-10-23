@@ -48,6 +48,8 @@ const FormProvider = ({ children }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [itemListNumber, setItemListNumber] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editID, setEditID] = useState();
   const selectRef = useRef("");
   const { userEmail } = useUserContext();
 
@@ -122,10 +124,27 @@ const FormProvider = ({ children }) => {
     dispatch({ type: "SAVE_SEND_BTN", payload: { id, token, userEmail } });
   };
 
+  const handleUpdate = (e) => {
+    setShowForm(false);
+    setIsEdit(false);
+    dispatch({
+      type: "SAVE_UPDATE_INVOICE",
+      payload: { token, userEmail, editID },
+    });
+  };
+
   const newInvoice = () => {
     setShowForm(true);
     setItemListNumber(false);
     dispatch({ type: "NEW_INVOICE" });
+  };
+
+  const updateInvoice = (data, e) => {
+    setShowForm(true);
+    selectRef.current.value = data.paymentTerms;
+    setIsEdit(true);
+    setEditID(e.target.dataset.id);
+    dispatch({ type: "SET_UPDATE_INVOICE", payload: { data } });
   };
 
   const token = cookies.get("TOKEN");
@@ -166,6 +185,10 @@ const FormProvider = ({ children }) => {
         handleDiscard,
         setItemListNumber,
         itemListNumber,
+        updateInvoice,
+        isEdit,
+        setIsEdit,
+        handleUpdate,
       }}
     >
       {children}
