@@ -239,6 +239,10 @@ h1 {
     .section {
       width: calc(100% - 30px);
     }
+
+    .show.form, .show.overlay {
+      left: 0;
+    }
 }
 
 @media only screen and (max-width: 390px) {

@@ -117,7 +117,7 @@ const InvoiceForm = () => {
             </div>
             {/* 3 col */}
             <div className="w-full flex justify-between flex-col mt-5 mb-10 lg:flex-row">
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="billFromCity" className="p-color">
                   City
                 </label>
@@ -138,7 +138,7 @@ const InvoiceForm = () => {
                   {errors ? errors.billFromCity?.message : ""}
                 </div>
               </div>
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="billFromPostCode" className="p-color">
                   Post Code
                 </label>
@@ -159,7 +159,7 @@ const InvoiceForm = () => {
                   {errors ? errors.billFromPostCode?.message : ""}
                 </div>
               </div>
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="billFromCountry" className="p-color">
                   Country
                 </label>
@@ -256,7 +256,7 @@ const InvoiceForm = () => {
             </div>
             {/* 3 col */}
             <div className="w-full flex flex-col justify-between mt-5 mb-10 lg:flex-row">
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="billToCity" className="p-color">
                   City
                 </label>
@@ -277,7 +277,7 @@ const InvoiceForm = () => {
                   {errors ? errors.billToCity?.message : ""}
                 </div>
               </div>
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="billToCode" className="p-color">
                   Post Code
                 </label>
@@ -298,7 +298,7 @@ const InvoiceForm = () => {
                   {errors ? errors.billToCode?.message : ""}
                 </div>
               </div>
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="billToCountry" className="p-color">
                   Country
                 </label>
@@ -322,7 +322,7 @@ const InvoiceForm = () => {
             </div>
             {/* 3 col */}
             <div className="w-full flex flex-col justify-between mt-5 mb-10 lg:flex-row">
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="issueDate" className="p-color">
                   Issue Date
                 </label>
@@ -350,7 +350,7 @@ const InvoiceForm = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="paymentTerms" className="p-color">
                   Payment Terms
                 </label>
@@ -367,7 +367,7 @@ const InvoiceForm = () => {
                   <option value="30">Net 30 Days</option>
                 </select>
               </div>
-              <div className="w-1/4">
+              <div className="w-full lg:w-1/4 ">
                 <label htmlFor="paymentDue" className="p-color">
                   Payment Due
                 </label>
@@ -419,7 +419,7 @@ const InvoiceForm = () => {
                   className="w-full flex flex-col justify-between mt-5 mb-10 lg:flex-row"
                   key={index}
                 >
-                  <div className="w-64">
+                  <div className="w-full lg:w-64">
                     <label className="p-color">Item Name</label>
                     <input
                       type="text"
@@ -433,7 +433,7 @@ const InvoiceForm = () => {
                       // min="1"
                     />
                   </div>
-                  <div className="w-14">
+                  <div className="w-full lg:w-14 ">
                     <label className="p-color">Qty.</label>
                     <input
                       type="number"
@@ -445,7 +445,7 @@ const InvoiceForm = () => {
                       onChange={(e) => handleItemFieldsChange(index, e)}
                     />
                   </div>
-                  <div className="w-28">
+                  <div className="w-full lg:w-28">
                     <label className="p-color">Price</label>
                     <input
                       type="number"
@@ -459,7 +459,7 @@ const InvoiceForm = () => {
                       onKeyDown={blockInvalidChar}
                     />
                   </div>
-                  <div className="w-28">
+                  <div className="w-full lg:w-28">
                     <label className="p-color">Total</label>
                     <input
                       type="number"
