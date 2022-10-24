@@ -4,8 +4,11 @@ import Moment from "react-moment";
 
 import axios from "axios";
 
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
 import { IoIosArrowBack } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
+import { GrDocumentPdf } from "react-icons/gr";
 
 import { useInvoiceContext } from "../../context/invoices_context";
 import { useFormContext } from "../../context/form_context";
@@ -14,6 +17,8 @@ import { formatPrice } from "../../utils/helpers";
 import DeleteInvoice from "../DeleteInvoice/DeleteInvoice";
 
 import Loading from "../Loading/Loading";
+
+import PdfPrint from "../PdfPrint/PdfPrint";
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -47,6 +52,7 @@ const SingleInvoice = () => {
           ...invoiceStatus,
           status: res.data[0].status,
           isTrue: false,
+          isDraft: false,
         }));
         break;
       case "pending":
@@ -54,6 +60,7 @@ const SingleInvoice = () => {
           ...invoiceStatus,
           status: res.data[0].status,
           isTrue: true,
+          isDraft: false,
         }));
         break;
       case "draft":
@@ -61,6 +68,7 @@ const SingleInvoice = () => {
           ...invoiceStatus,
           status: res.data[0].status,
           isTrue: false,
+          isDraft: true,
         }));
         break;
     }
@@ -122,9 +130,37 @@ const SingleInvoice = () => {
   return (
     <>
       <div className="container section">
-        <Link to="/invoices" className="flex items-center">
-          <IoIosArrowBack className="mr-2" /> Go Back
-        </Link>
+        <div className="flex justify-content justify-between">
+          <Link to="/invoices" className="flex items-center">
+            <IoIosArrowBack className="mr-2" /> Go Back
+          </Link>
+          <Link to="/invoices" className="flex items-center"></Link>
+          {!invoiceStatus.isDraft && (
+            <PDFDownloadLink
+              document={
+                <PdfPrint
+                  id={id}
+                  items={items}
+                  billFrom={billFrom}
+                  billTo={billTo}
+                  issue={issue}
+                  due={due}
+                  description={description}
+                  total={total}
+                />
+              }
+              fileName={`invoice_${id}.pdf`}
+            >
+              {({ loading }) =>
+                loading ? (
+                  "Loading..."
+                ) : (
+                  <GrDocumentPdf className="mr-2 text-2xl " />
+                )
+              }
+            </PDFDownloadLink>
+          )}
+        </div>
         <div className="invoice-top-info bg-white p-6 rounded-xl my-5 flex flex-col justify-between lg:flex lg:flex-row">
           <div className="invoice-status flex items-center justify-between lg:justify-start">
             Status
