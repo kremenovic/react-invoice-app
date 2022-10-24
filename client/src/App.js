@@ -42,6 +42,7 @@ function App() {
           }
         />
         <Route exact path="/register" element={<RegisterPage />} />
+
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
