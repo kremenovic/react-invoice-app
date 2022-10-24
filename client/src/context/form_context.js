@@ -107,6 +107,7 @@ const FormProvider = ({ children }) => {
   const handleDiscard = (e) => {
     e.preventDefault();
     setShowForm(false);
+    setIsEdit(false);
     dispatch({ type: "DISCARD_BTN" });
   };
 

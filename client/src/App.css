@@ -147,13 +147,13 @@ h1 {
 
 .overlay {
   left: -100%;
-  transition: 1s;
+  transition: 0.8s;
 }
 
 .show.form,
 .show.overlay {
   left: 105px;
-  transition: 1s;
+  transition: 0.8s;
 }
 
 .form-shadow {
@@ -177,6 +177,26 @@ h1 {
   transition: 1s;
 }
 
+.loading-section {
+  height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #7C5DFA; 
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 @media only screen and (max-width: 768px) {
 

@@ -13,6 +13,8 @@ import { useFormContext } from "../../context/form_context";
 import { formatPrice } from "../../utils/helpers";
 import DeleteInvoice from "../DeleteInvoice/DeleteInvoice";
 
+import Loading from "../Loading/Loading";
+
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -114,7 +116,7 @@ const SingleInvoice = () => {
   } = invoiceData;
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
 
   return (
@@ -237,7 +239,7 @@ const SingleInvoice = () => {
                       {item.quantity}
                     </h1>
                     <h1 className="flex-initial w-32 text-right font-bold p-color">
-                      {item.price}
+                      {parseFloat(item.price).toFixed(2)}
                     </h1>
                     <h1 className="flex-initial w-32 text-right font-bold">
                       {item.total}

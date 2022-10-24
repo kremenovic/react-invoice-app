@@ -18,8 +18,9 @@ const form_reducer = (state, action) => {
       data[action.payload.index].total =
         data[action.payload.index].quantity * data[action.payload.index].price;
 
-      data[action.payload.index].total =
-        data[action.payload.index].total.toFixed(2);
+      data[action.payload.index].price = parseFloat(
+        data[action.payload.index].price
+      ).toFixed(2);
 
       return { ...state, itemListFields: data };
 
@@ -96,6 +97,7 @@ const form_reducer = (state, action) => {
       } else if (state.itemListFields.length === 1) {
         state.total = parseFloat(state.itemListFields[0].total);
       }
+
       Axios.post(`http://localhost:8080/api/invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
