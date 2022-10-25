@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useFormContext } from "../context/form_context";
+
 import axios from "axios";
 
 import Cookies from "universal-cookie";
@@ -43,7 +44,9 @@ export const InvoiceProvider = ({ children }) => {
 
   useEffect(() => {
     if (status.length === 0) {
-      getInvoices();
+      if (token) {
+        getInvoices();
+      }
     } else {
       setInvoices(
         allInvoices.filter((invoice) =>
