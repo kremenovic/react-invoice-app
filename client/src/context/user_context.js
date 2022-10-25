@@ -13,6 +13,9 @@ export const UserProvider = ({ children }) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  const demoEmail = "stefan@webdevpro.org";
+  const demoPassword = "BLdSNiXbg5+";
+
   const [userEmail, setUserEmail] = useState("");
 
   const URL = `http://localhost:8080/api/`;
@@ -43,6 +46,28 @@ export const UserProvider = ({ children }) => {
   const handleLogin = (e) => {
     axios
       .post(`${URL}login`, { loginEmail, loginPassword })
+
+      .then((res) => {
+        alert("Succesfully logged in!");
+        cookies.set("TOKEN", res.data.token, {
+          path: "/",
+        });
+
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+  };
+
+  const demoLogin = (e) => {
+    e.preventDefault();
+    console.log(demoEmail);
+    axios
+      .post(`${URL}login`, {
+        loginEmail: demoEmail,
+        loginPassword: demoPassword,
+      })
 
       .then((res) => {
         alert("Succesfully logged in!");
@@ -99,6 +124,7 @@ export const UserProvider = ({ children }) => {
         setRegisterEmail,
         setRegisterPassword,
         handleRegistration,
+        demoLogin,
       }}
     >
       {children}

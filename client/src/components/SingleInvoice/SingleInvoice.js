@@ -278,7 +278,7 @@ const SingleInvoice = () => {
                       {parseFloat(item.price).toFixed(2)}
                     </h1>
                     <h1 className="flex-initial w-32 text-right font-bold">
-                      {item.total}
+                      {parseFloat(item.total).toFixed(2)}
                     </h1>
                   </div>
                 );

@@ -10,6 +10,7 @@ const LoginForm = () => {
     loginPassword,
     setLoginPassword,
     handleLogin,
+    demoLogin,
   } = useUserContext();
 
   const {
@@ -67,6 +68,14 @@ const LoginForm = () => {
           type="submit"
         >
           Login
+        </button>
+        <button
+          className="mt-5 edit-invoice opacity-70 px-4 py-2 rounded-3xl font-bold flex justify-center items-center cursor-pointer w-full"
+          type="button"
+          name="draft"
+          onClick={(e) => demoLogin(e)}
+        >
+          Demo Login
         </button>
       </form>
     </>
