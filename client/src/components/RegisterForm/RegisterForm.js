@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useUserContext } from "../../context/user_context";
+
+import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
   const {
@@ -12,9 +14,18 @@ const RegisterForm = () => {
     handleRegistration,
   } = useUserContext();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   return (
     <>
-      <form className="px-10 pt-12 w-full text-left">
+      <form
+        className="px-10 pt-12 w-full text-left"
+        onSubmit={handleSubmit((e) => handleRegistration(e))}
+      >
         <div className="w-full flex flex-col">
           <label htmlFor="registerName" className="p-color">
             Name
@@ -24,9 +35,15 @@ const RegisterForm = () => {
             id="registerName"
             name="registerName"
             value={registerName}
-            onChange={(e) => setRegisterName(e.target.value)}
             className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+            {...register("registerName", {
+              required: "This field cannot be empty",
+              onChange: (e) => setRegisterName(e.target.value),
+            })}
           />
+          <div className="text-red-500 text-xs">
+            {errors ? errors.registerName?.message : ""}
+          </div>
         </div>
         <div className="w-full flex flex-col mt-5">
           <label htmlFor="registerEmail" className="p-color">
@@ -37,9 +54,15 @@ const RegisterForm = () => {
             id="registerEmail"
             name="registerEmail"
             value={registerEmail}
-            onChange={(e) => setRegisterEmail(e.target.value)}
             className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+            {...register("registerEmail", {
+              required: "This field cannot be empty",
+              onChange: (e) => setRegisterEmail(e.target.value),
+            })}
           />
+          <div className="text-red-500 text-xs">
+            {errors ? errors.registerEmail?.message : ""}
+          </div>
         </div>
         <div className="w-full flex flex-col mt-5">
           <label htmlFor="registerPassword" className="p-color">
@@ -50,14 +73,19 @@ const RegisterForm = () => {
             id="registerPassword"
             name="registerPassword"
             value={registerPassword}
-            onChange={(e) => setRegisterPassword(e.target.value)}
             className="border h-12 mt-2 px-3 focus:outline-none focus:border-purple-500 rounded-lg"
+            {...register("registerPassword", {
+              required: "This field cannot be empty",
+              onChange: (e) => setRegisterPassword(e.target.value),
+            })}
           />
+          <div className="text-red-500 text-xs">
+            {errors ? errors.registerPassword?.message : ""}
+          </div>
         </div>
         <button
           className="mt-5 add-invoice px-4 py-2 rounded-3xl font-bold flex justify-center items-center cursor-pointer w-full"
           type="submit"
-          onClick={(e) => handleRegistration(e)}
         >
           Register
         </button>

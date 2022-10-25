@@ -19,7 +19,6 @@ export const UserProvider = ({ children }) => {
   const token = cookies.get("TOKEN");
 
   const handleRegistration = (e) => {
-    e.preventDefault();
     axios
       .post(`${URL}register`, { registerName, registerEmail, registerPassword })
       .then(() => {
@@ -37,12 +36,11 @@ export const UserProvider = ({ children }) => {
           });
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        alert(err.response.data.err);
       });
   };
 
   const handleLogin = (e) => {
-    e.preventDefault();
     axios
       .post(`${URL}login`, { loginEmail, loginPassword })
 
@@ -55,7 +53,7 @@ export const UserProvider = ({ children }) => {
         window.location.href = "/";
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        alert(err.response.data.message);
       });
   };
 

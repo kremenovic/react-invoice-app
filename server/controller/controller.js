@@ -3,6 +3,7 @@ const model = require("../models/model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { response } = require("express");
+const e = require("express");
 
 /*** AUTHENTICATION/AUTHORIZATION  ***/
 
@@ -11,17 +12,23 @@ async function create_User(req, res) {
   if (!req.body) return res.status(400).json("Post HTTP Data not Provided");
   let { registerName, registerEmail, registerPassword } = req.body;
 
-  bcrypt.hash(registerPassword, 10).then((hash) => {
-    const create = new model.Users({
-      name: registerName,
-      email: registerEmail,
-      password: hash,
-    });
+  model.Users.findOne({ email: registerEmail }).then((user) => {
+    if (user) {
+      res.status(401).json({ err: "User with that email already exists." });
+    } else {
+      bcrypt.hash(registerPassword, 10).then((hash) => {
+        const create = new model.Users({
+          name: registerName,
+          email: registerEmail,
+          password: hash,
+        });
 
-    create.save(function (err) {
-      if (!err) return res.json(create);
-      return res.status(400).json({ message: `${err}` });
-    });
+        create.save(function (err) {
+          if (!err) return res.json(create);
+          return res.status(400).json({ message: `${err}` });
+        });
+      });
+    }
   });
 }
 
@@ -29,9 +36,6 @@ async function create_User(req, res) {
 async function login_User(req, res) {
   if (!req.body) return res.status(400).json("Post HTTP Data not Provided");
   let { loginEmail, loginPassword } = req.body;
-
-  // let email = "stefan@kremenovic.com";
-  // let password = "babab";
 
   model.Users.findOne({ email: loginEmail })
     .then((user) => {
@@ -79,9 +83,6 @@ async function login_User(req, res) {
 
 // get /api/user
 async function get_User(req, res) {
-  // let { token } = req.body;
-  // let email = "stefan@kremenovic.com";
-
   try {
     //   get the token from the authorization header
     const token = await req.headers.authorization.split(" ")[1];
@@ -241,7 +242,7 @@ async function delete_Invoice(req, res) {
     })
       .clone()
       .catch(function (err) {
-        return res.json("Error While Deleting Transaction");
+        return res.json("Error While Deleting Invoice");
       });
   } catch (error) {
     res.status(401).json({
@@ -279,7 +280,7 @@ async function update_Status(req, res) {
     )
       .clone()
       .catch(function (err) {
-        return res.json("Error While Updating Invoice");
+        return res.json("Error While Updating Invoice Status");
       });
   } catch (error) {
     res.status(401).json({
