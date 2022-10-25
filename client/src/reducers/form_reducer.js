@@ -18,10 +18,6 @@ const form_reducer = (state, action) => {
       data[action.payload.index].total =
         data[action.payload.index].quantity * data[action.payload.index].price;
 
-      data[action.payload.index].price = parseFloat(
-        data[action.payload.index].price
-      ).toFixed(2);
-
       return { ...state, itemListFields: data };
 
     case "REMOVE_ITEM_FIELD":

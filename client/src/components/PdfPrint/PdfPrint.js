@@ -267,7 +267,7 @@ const PdfPrint = ({
                   alignItems: "flex-end",
                 }}
               >
-                {item.total}
+                {parseFloat(item.total).toFixed(2)}
               </Text>
             </View>
           );
