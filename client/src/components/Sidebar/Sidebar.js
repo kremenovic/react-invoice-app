@@ -30,7 +30,7 @@ const Sidebar = () => {
     <div className="container">
       <div className="sidebar fixed top-0 left-0 h-full flex flex-col justify-between pb-5">
         <div className="logo flex justify-center p-10">
-          <Link to="/">
+          <Link to="/invoices">
             <img src={logo} alt="invoice app" />
           </Link>
         </div>
@@ -49,11 +49,13 @@ const Sidebar = () => {
             </button>
           </div>
           <div className="user flex justify-center">
-            <img
-              src={userImage}
-              alt="user image"
-              className="rounded-full w-10"
-            />
+            <Link to="/">
+              <img
+                src={userImage}
+                alt="user image"
+                className="rounded-full w-10"
+              />
+            </Link>
           </div>
         </div>
       </div>
