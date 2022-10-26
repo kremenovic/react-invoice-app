@@ -85,7 +85,7 @@ export const UserProvider = ({ children }) => {
   const handleLogout = (e) => {
     e.preventDefault(e);
     cookies.remove("TOKEN", { path: "/" });
-    window.location.href = "/register";
+    window.location.href = "/";
   };
 
   const getUser = async () => {
