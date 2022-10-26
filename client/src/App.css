@@ -22,6 +22,25 @@ h1 {
   color: #0C0E16;
 }
 
+.header {
+  height: 50px;
+}
+
+.landing-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: calc(100vh - 50px);
+}
+
+.info {
+  max-width: 80%;
+}
+
+.info p {
+  color: #d5d5d5;
+}
+
 .center-icon {
       top: 55%;
     left: 90%;
@@ -193,6 +212,111 @@ h1 {
   margin: 0 auto;
 }
 
+/* Dark Mode */
+
+.dark-mode #root,
+body.dark-mode {
+  background-color: #141625;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3  {
+  color: #fff;
+}
+
+.dark-mode .p-color {
+  color: #DFE3FA;
+}
+
+.dark-mode .filters p {
+  color: #fff;
+}
+
+.dark-mode .invoice {
+  background-color: #1E2139;
+}
+
+.dark-mode .invoice-id p {
+  color: #fff;
+}
+
+.dark-mode .invoice-name .p-color {
+  color: #fff;
+}
+
+.dark-mode .invoice-amount {
+  color: #fff;
+}
+
+.dark-mode .invoice-link p svg {
+  color: #7C5DFA;
+}
+
+.dark-mode .invoice-status button.draft {
+  color: #fff;
+}
+
+.dark-mode .single-invoice-top {
+  color: #fff;
+}
+
+.dark-mode .single-invoice-top svg {
+  color: #7C5DFA;
+}
+
+.dark-mode .single-invoice-top a svg path {
+  stroke: #fff;
+}
+
+.dark-mode .invoice-top-info {
+  background-color: #1E2139;
+}
+
+.dark-mode .invoice-top-info .invoice-status {
+  color: #DFE3FA;
+}
+
+.dark-mode .invoice-bottom-info {
+  background-color: #1E2139;
+}
+
+.dark-mode .invoice-items {
+  background-color: #252945;
+}
+
+.dark-mode .invoice-total {
+  background-color: #0C0E16;
+}
+
+.dark-mode .center-delete,
+.dark-mode .center-delete .inner-section {
+  background-color: #1E2139;
+}
+
+.dark-mode .form,
+.dark-mode .form .inner-section {
+  background-color: #141625;
+}
+
+.dark-mode .form .inner-section input,
+.dark-mode .form .inner-section select {
+  background: #1E2139;
+  border-color: #1E2139;
+  color: #fff;
+}
+
+.dark-mode .add-item {
+  background-color: #252945;
+  color: #fff;
+}
+
+.dark-mode .form .inner-section .invoice-top-info {
+  background-color: transparent;
+}
+
+/* End of Dark Mode */
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -242,6 +366,20 @@ h1 {
 
     .show.form, .show.overlay {
       left: 0;
+    }
+
+    .header {
+      padding: 0px 20px
+    }
+
+    .landing-content {
+      grid-template-columns: 1fr;
+    }
+
+    .info {
+      order: 2;
+      max-width: 100%;
+      padding: 0px 20px;
     }
 }
 

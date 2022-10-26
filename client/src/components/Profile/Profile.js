@@ -17,7 +17,7 @@ const Profile = () => {
         <div className="user flex justify-center">
           <img src={userImage} alt="user image" className="rounded-full w-20" />
         </div>
-        <p>
+        <p className="p-color">
           Welcome back, {loginName}. Please check your{" "}
           <Link
             to="/invoices/"
