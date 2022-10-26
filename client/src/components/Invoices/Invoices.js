@@ -7,8 +7,7 @@ import { FaLongArrowAltRight, FaCircle } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
 
 const Invoices = ({ invoice }) => {
-  const { id, paymentDue, billFromFields, billToFields, total, status } =
-    invoice;
+  const { id, paymentDue, billToFields, total, status } = invoice;
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (

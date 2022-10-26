@@ -35,7 +35,7 @@ const SingleInvoice = () => {
   const { updateInvoice, isEdit, setIsEdit } = useFormContext();
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  const URL = `http://localhost:8080/api/`;
+  const URL = process.env.REACT_APP_API_URL;
   const token = cookies.get("TOKEN");
 
   const { id: invoiceID } = useParams();
@@ -94,7 +94,7 @@ const SingleInvoice = () => {
   const updateStatus = (e) => {
     if (invoiceStatus.status === "pending") {
       axios.put(
-        `http://localhost:8080/api/invoices`,
+        `${URL}invoices`,
         { data: { _id: e.target.dataset.id, status: "paid" } },
         { headers: { Authorization: `Bearer ${token}` } }
       );

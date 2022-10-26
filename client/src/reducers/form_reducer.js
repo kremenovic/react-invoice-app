@@ -1,6 +1,7 @@
 import Axios from "axios";
 
 const form_reducer = (state, action) => {
+  const URL = process.env.REACT_APP_API_URL;
   switch (action.type) {
     case "ADD_ITEM_FIELD":
       let newField = [
@@ -94,7 +95,7 @@ const form_reducer = (state, action) => {
         state.total = parseFloat(state.itemListFields[0].total);
       }
 
-      Axios.post(`http://localhost:8080/api/invoices`, state, {
+      Axios.post(`${URL}invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
         },
@@ -115,7 +116,7 @@ const form_reducer = (state, action) => {
         state.total = parseFloat(state.itemListFields[0].total);
       }
 
-      Axios.post(`http://localhost:8080/api/invoices`, state, {
+      Axios.post(`${URL}invoices`, state, {
         headers: {
           Authorization: `Bearer ${action.payload.token}`,
         },
@@ -134,7 +135,7 @@ const form_reducer = (state, action) => {
         state.total = parseFloat(state.itemListFields[0].total);
       }
       Axios.put(
-        `http://localhost:8080/api/invoices/${state.id}`,
+        `${URL}invoices/${state.id}`,
         { data: { _id: action.payload.editID, state } },
         { headers: { Authorization: `Bearer ${action.payload.token}` } }
       );

@@ -13,12 +13,12 @@ export const UserProvider = ({ children }) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const demoEmail = "stefan@webdevpro.org";
-  const demoPassword = "BLdSNiXbg5+";
+  const demoEmail = process.env.REACT_APP_DEMO_EMAIL;
+  const demoPassword = process.env.REACT_APP_DEMO_PASSWORD;
 
   const [userEmail, setUserEmail] = useState("");
 
-  const URL = `http://localhost:8080/api/`;
+  const URL = process.env.REACT_APP_API_URL;
   const token = cookies.get("TOKEN");
 
   const handleRegistration = (e) => {
@@ -62,7 +62,6 @@ export const UserProvider = ({ children }) => {
 
   const demoLogin = (e) => {
     e.preventDefault();
-    console.log(demoEmail);
     axios
       .post(`${URL}login`, {
         loginEmail: demoEmail,
