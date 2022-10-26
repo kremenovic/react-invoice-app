@@ -7,8 +7,13 @@ import { FaLongArrowAltRight, FaCircle } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
 
 const Invoices = ({ invoice }) => {
-  const { id, paymentDue, billFromFields, total, status } = invoice;
+  const { id, paymentDue, billFromFields, billToFields, total, status } =
+    invoice;
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  {
+    console.log(billToFields[0]);
+  }
 
   return (
     <div className="invoice flex justify-between items-center bg-white p-6 rounded-xl hover:translate-y-1 transition-all duration-300">
@@ -25,9 +30,7 @@ const Invoices = ({ invoice }) => {
           </p>
         </div>
         <div className="invoice-name">
-          <p className="p-color text-xs">
-            {billFromFields[0].billFromClientName}
-          </p>
+          <p className="p-color text-xs">{billToFields[0].billToClientName}</p>
         </div>
       </div>
       <div className="invoice-right flex flex-wrap gap-5 items-center flex-col md:gap-3 md:flex-row">

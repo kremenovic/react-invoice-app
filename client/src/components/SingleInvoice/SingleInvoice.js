@@ -130,7 +130,7 @@ const SingleInvoice = () => {
   return (
     <>
       <div className="container section">
-        <div className="flex justify-content justify-between">
+        <div className="flex justify-content justify-between single-invoice-top">
           <Link to="/invoices" className="flex items-center">
             <IoIosArrowBack className="mr-2" /> Go Back
           </Link>

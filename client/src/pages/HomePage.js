@@ -1,9 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Profile from "../components/Profile/Profile";
+import Landing from "../components/Landing/Landing";
+
+import { useUserContext } from "../context/user_context";
 
 const HomePage = () => {
-  return <Profile />;
+  const { token } = useUserContext();
+
+  return <>{token ? <Profile /> : <Landing />}</>;
 };
 
 export default HomePage;
