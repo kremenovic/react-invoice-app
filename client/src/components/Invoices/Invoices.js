@@ -11,10 +11,6 @@ const Invoices = ({ invoice }) => {
     invoice;
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  {
-    console.log(billToFields[0]);
-  }
-
   return (
     <div className="invoice flex justify-between items-center bg-white p-6 rounded-xl hover:translate-y-1 transition-all duration-300">
       <div className="invoice-left flex flex-wrap gap-3 flex-col md:gap-3 md:flex-row">

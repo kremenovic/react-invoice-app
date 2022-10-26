@@ -10,6 +10,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
 import { GrDocumentPdf } from "react-icons/gr";
 
+import { useMediaQuery } from "react-responsive";
+
 import { useInvoiceContext } from "../../context/invoices_context";
 import { useFormContext } from "../../context/form_context";
 
@@ -31,6 +33,7 @@ const SingleInvoice = () => {
   const [showDelete, setShowDelete] = useState(false);
 
   const { updateInvoice, isEdit, setIsEdit } = useFormContext();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const URL = `http://localhost:8080/api/`;
   const token = cookies.get("TOKEN");
@@ -261,29 +264,54 @@ const SingleInvoice = () => {
                 <p className="p-color text-xs text-right">Total</p>
               </div>
             </div>
-            <div className="invoice-items-body ">
-              {items?.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="item flex justify-between my-5 last:my-0"
-                  >
-                    <h1 className="flex-initial w-64 font-bold">
-                      {item.itemName}
-                    </h1>
-                    <h1 className="flex-initial w-32 text-center font-bold p-color">
-                      {item.quantity}
-                    </h1>
-                    <h1 className="flex-initial w-32 text-right font-bold p-color">
-                      {parseFloat(item.price).toFixed(2)}
-                    </h1>
-                    <h1 className="flex-initial w-32 text-right font-bold">
-                      {parseFloat(item.total).toFixed(2)}
-                    </h1>
-                  </div>
-                );
-              })}
-            </div>
+            {!isMobile && (
+              <div className="invoice-items-body ">
+                {items?.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="item flex justify-between my-5 last:my-0"
+                    >
+                      <h1 className="flex-initial w-64 font-bold">
+                        {item.itemName}
+                      </h1>
+                      <h1 className="flex-initial w-32 text-center font-bold p-color">
+                        {item.quantity}
+                      </h1>
+                      <h1 className="flex-initial w-32 text-right font-bold p-color">
+                        {parseFloat(item.price).toFixed(2)}
+                      </h1>
+                      <h1 className="flex-initial w-32 text-right font-bold">
+                        {parseFloat(item.total).toFixed(2)}
+                      </h1>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {isMobile && (
+              <div className="invoice-items-body">
+                {items?.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="item flex justify-between my-5 last:my-0 items-center"
+                    >
+                      <div className="flex-initial w-64 font-bold ">
+                        <h1>{item.itemName}</h1>
+                        <p className="p-color text-sm">
+                          {item.quantity} x {parseFloat(item.price).toFixed(2)}
+                        </p>
+                      </div>
+                      <h1 className="flex-initial w-32 text-right font-bold">
+                        ${parseFloat(item.total).toFixed(2)}
+                      </h1>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
           <div className="invoice-total dark-bg rounded-b-lg p-6 flex justify-between items-center">
             <p className="text-white text-xs">Amount Due</p>
