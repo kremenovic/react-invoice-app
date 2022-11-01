@@ -283,10 +283,10 @@ const SingleInvoice = () => {
                         {item.quantity}
                       </h1>
                       <h1 className="flex-initial w-32 text-right font-bold p-color">
-                        {parseFloat(item.price).toFixed(2)}
+                        ${parseFloat(item.price).toFixed(2)}
                       </h1>
                       <h1 className="flex-initial w-32 text-right font-bold">
-                        {parseFloat(item.total).toFixed(2)}
+                        ${parseFloat(item.total).toFixed(2)}
                       </h1>
                     </div>
                   );
@@ -305,7 +305,7 @@ const SingleInvoice = () => {
                       <div className="flex-initial w-64 font-bold ">
                         <h1>{item.itemName}</h1>
                         <p className="p-color text-sm">
-                          {item.quantity} x {parseFloat(item.price).toFixed(2)}
+                          {item.quantity} x ${parseFloat(item.price).toFixed(2)}
                         </p>
                       </div>
                       <h1 className="flex-initial w-32 text-right font-bold">
