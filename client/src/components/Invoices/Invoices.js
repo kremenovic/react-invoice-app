@@ -7,7 +7,7 @@ import { FaLongArrowAltRight, FaCircle } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
 
 const Invoices = ({ invoice }) => {
-  const { id, paymentDue, clientName, total, status } = invoice;
+  const { id, paymentDue, billToFields, total, status } = invoice;
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (
@@ -16,16 +16,16 @@ const Invoices = ({ invoice }) => {
         <div className="invoice-id">
           <p className="font-bold text-xs">
             <span className="p-color">#</span>
-            {invoice.id}
+            {id}
           </p>
         </div>
         <div className="invoice-date">
           <p className="p-color text-xs">
-            Due <Moment format="DD MMM YYYY">{paymentDue}</Moment>
+            Due <Moment format="DD MMM YYYY">{parseInt(paymentDue)}</Moment>
           </p>
         </div>
         <div className="invoice-name">
-          <p className="p-color text-xs">{clientName}</p>
+          <p className="p-color text-xs">{billToFields[0].billToClientName}</p>
         </div>
       </div>
       <div className="invoice-right flex flex-wrap gap-5 items-center flex-col md:gap-3 md:flex-row">
