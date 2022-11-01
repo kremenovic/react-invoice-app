@@ -399,6 +399,14 @@ body.dark-mode {
       display: none;;
     }
 
+    .center-delete {
+      top: 30%;
+    }
+
+    .center-delete.active {
+      transform: translate(-50%, -30%) scale(1);
+    }
+
 }
 
 @media only screen and (max-width: 390px) {

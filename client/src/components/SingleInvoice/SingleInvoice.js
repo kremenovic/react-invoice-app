@@ -26,7 +26,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 const SingleInvoice = () => {
-  const { invoiceStatus, setInvoiceStatus } = useInvoiceContext();
+  const { invoiceStatus, setInvoiceStatus, setStatus } = useInvoiceContext();
 
   const [invoiceData, setInvoiceData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -75,7 +75,7 @@ const SingleInvoice = () => {
         }));
         break;
     }
-
+    setStatus([]);
     setLoading(false);
   };
 

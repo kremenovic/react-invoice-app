@@ -60,7 +60,13 @@ export const InvoiceProvider = ({ children }) => {
 
   return (
     <InvoiceContext.Provider
-      value={{ invoices, filterInvoices, invoiceStatus, setInvoiceStatus }}
+      value={{
+        invoices,
+        filterInvoices,
+        invoiceStatus,
+        setInvoiceStatus,
+        setStatus,
+      }}
     >
       {children}
     </InvoiceContext.Provider>
