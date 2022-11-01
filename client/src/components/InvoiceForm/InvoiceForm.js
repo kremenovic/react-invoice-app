@@ -514,7 +514,7 @@ const InvoiceForm = () => {
                   name="draft"
                   onClick={(e) => handleSaveDraft(e)}
                 >
-                  Save As Draft
+                  Save Draft
                 </button>
                 <button
                   className={

@@ -132,7 +132,11 @@ const SingleInvoice = () => {
 
   return (
     <>
-      <div className="container section">
+      <div
+        className={
+          isEdit ? "container section single-invoice-page" : "container section"
+        }
+      >
         <div className="flex justify-content justify-between single-invoice-top">
           <Link to="/invoices" className="flex items-center">
             <IoIosArrowBack className="mr-2" /> Go Back
@@ -321,13 +325,17 @@ const SingleInvoice = () => {
           </div>
         </div>
       </div>
-      <DeleteInvoice
-        invoiceId={id}
-        setShowDelete={setShowDelete}
-        showDelete={showDelete}
-        deleteInvoice={deleteInvoice}
-        docId={_id}
-      />
+      {showDelete ? (
+        <DeleteInvoice
+          invoiceId={id}
+          setShowDelete={setShowDelete}
+          showDelete={showDelete}
+          deleteInvoice={deleteInvoice}
+          docId={_id}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };

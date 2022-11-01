@@ -12,12 +12,16 @@ import NoInvoices from "../components/NoInvoices/NoInvoices";
 import { FaPlusCircle } from "react-icons/fa";
 
 const InvoicesPage = () => {
-  const { invoices } = useInvoiceContext();
-  const { newInvoice } = useFormContext();
+  const { invoices, setStatus } = useInvoiceContext();
+  const { newInvoice, showForm } = useFormContext();
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
-    <div className="container section">
+    <div
+      className={
+        showForm ? "container section invoice-page" : "container section"
+      }
+    >
       <div className="content-top flex justify-between items-center">
         <div className="content-top-left">
           <h1 className="text-3xl font-bold md:text-xl">Invoices</h1>
@@ -42,7 +46,11 @@ const InvoicesPage = () => {
         <section className="invoices-content mt-12 flex flex-col gap-5">
           {invoices.map((invoice, index) => {
             return (
-              <Link key={index} to={`/invoices/${invoice.id}`}>
+              <Link
+                key={index}
+                to={`/invoices/${invoice.id}`}
+                onClick={() => setStatus([])}
+              >
                 <Invoices invoice={invoice} />
               </Link>
             );

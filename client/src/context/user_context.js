@@ -13,6 +13,8 @@ export const UserProvider = ({ children }) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const demoEmail = process.env.REACT_APP_DEMO_EMAIL;
   const demoPassword = process.env.REACT_APP_DEMO_PASSWORD;
 
@@ -44,9 +46,9 @@ export const UserProvider = ({ children }) => {
   };
 
   const handleLogin = (e) => {
+    setLoading(true);
     axios
       .post(`${URL}login`, { loginEmail, loginPassword })
-
       .then((res) => {
         alert("Succesfully logged in!");
         cookies.set("TOKEN", res.data.token, {
@@ -54,6 +56,7 @@ export const UserProvider = ({ children }) => {
         });
 
         window.location.href = "/";
+        setLoading(false);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -61,6 +64,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const demoLogin = (e) => {
+    setLoading(true);
     e.preventDefault();
     axios
       .post(`${URL}login`, {
@@ -75,6 +79,7 @@ export const UserProvider = ({ children }) => {
         });
 
         window.location.href = "/";
+        setLoading(false);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -124,6 +129,7 @@ export const UserProvider = ({ children }) => {
         setRegisterPassword,
         handleRegistration,
         demoLogin,
+        loading,
       }}
     >
       {children}

@@ -254,7 +254,7 @@ const PdfPrint = ({
                   alignItems: "flex-end",
                 }}
               >
-                {parseFloat(item.price).toFixed(2)}
+                ${parseFloat(item.price).toFixed(2)}
               </Text>
               <Text
                 style={{
@@ -267,7 +267,7 @@ const PdfPrint = ({
                   alignItems: "flex-end",
                 }}
               >
-                {parseFloat(item.total).toFixed(2)}
+                ${parseFloat(item.total).toFixed(2)}
               </Text>
             </View>
           );

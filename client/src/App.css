@@ -385,6 +385,20 @@ body.dark-mode {
     .invoice-items-head {
       display: none;
     }
+
+    .showDelete {
+      position: unset;
+    }
+
+    .show.form {
+      position: relative;
+    }
+
+   .single-invoice-page,
+   .invoice-page {
+      display: none;;
+    }
+
 }
 
 @media only screen and (max-width: 390px) {

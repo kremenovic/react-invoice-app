@@ -11,6 +11,7 @@ const LoginForm = () => {
     setLoginPassword,
     handleLogin,
     demoLogin,
+    loading,
   } = useUserContext();
 
   const {
@@ -66,15 +67,17 @@ const LoginForm = () => {
         <button
           className="mt-5 add-invoice px-4 py-2 rounded-3xl font-bold flex justify-center items-center cursor-pointer w-full"
           type="submit"
+          disabled={loading ? true : false}
         >
-          Login
+          {loading ? "Please wait..." : "Login"}
         </button>
         <button
           className="mt-5 edit-invoice opacity-70 px-4 py-2 rounded-3xl font-bold flex justify-center items-center cursor-pointer w-full"
           type="button"
           onClick={(e) => demoLogin(e)}
+          disabled={loading ? true : false}
         >
-          Demo Login
+          {loading ? "Please wait..." : "Demo Login"}
         </button>
       </form>
     </>
