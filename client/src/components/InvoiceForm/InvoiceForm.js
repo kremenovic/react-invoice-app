@@ -466,7 +466,7 @@ const InvoiceForm = () => {
                       disabled
                       className="border h-12 mt-2 p-color w-full px-3 focus:outline-none focus:border-purple-500 rounded-lg"
                       name="total"
-                      value={input.total}
+                      value={input.total.toFixed(2)}
                       onChange={(e) => handleItemFieldsChange(index, e)}
                     />
                   </div>
